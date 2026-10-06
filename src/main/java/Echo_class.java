@@ -43,7 +43,7 @@ public class Echo_class extends TelegramLongPollingBot {
             return "Commands:\n" +
                     "/start\n" +
                     "/help\n";
-        } else {return incomingText;}
+        } else {return "You typed: " + incomingText;}
     }
     @Override
     public void onUpdateReceived(Update update){
