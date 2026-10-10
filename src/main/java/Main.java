@@ -6,7 +6,8 @@ public class Main {
     public void main(String[] args)
         throws Exception{
         var botsApi = new TelegramBotsApi(DefaultBotSession.class); // Init bot API
-         botsApi.registerBot(new Echo_class() );                    // Bot registration
+        Logic logic = new Logic();
+        botsApi.registerBot(new Echo_class(logic));                    // Bot registration
         System.out.println("Bot is running,babay!");
 
     }

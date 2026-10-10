@@ -3,7 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class Echo_classTest {
 
-    private final Echo_class bot = new Echo_class();
+    private final Logic bot = new Logic();
 
     @Test
     void start_test() {
@@ -27,16 +27,16 @@ class Echo_classTest {
     }
     @Test
     void regularText_isEchoed() {
-        assertEquals("привет", bot.buildResponse("привет"));
+        assertEquals("You typed: привет", bot.buildResponse("привет"));
     }
 
     @Test
     void englishText_isEchoed() {
-        assertEquals("hello world", bot.buildResponse("hello world"));
+        assertEquals("You typed: hello world", bot.buildResponse("hello world"));
     }
 
     @Test
     void textWithSpaces_isEchoedExactly() {
-        assertEquals("  много   пробелов  ", bot.buildResponse("  много   пробелов  "));
+        assertEquals("You typed:   много   пробелов  ", bot.buildResponse("  много   пробелов  "));
     }
 }

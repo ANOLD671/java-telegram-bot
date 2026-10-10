@@ -12,6 +12,12 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class Echo_class extends TelegramLongPollingBot {
 
     private final Dotenv dotenv = Dotenv.load();
+    private final Logic logic;
+
+    public Echo_class(Logic logic) {
+        this.logic = logic;
+    }
+
     /**
      * @return bot username
      */
@@ -35,23 +41,14 @@ public class Echo_class extends TelegramLongPollingBot {
      * @param "update" java object
      */
 
-    public String buildResponse(String incomingText) {
-        if ("/start".equals(incomingText)) {
-            return "Hello! I am echo-bot. I will repeat your messages\n" +
-                    "Type /help to see all commands";
-        } else if ("/help".equals(incomingText)) {
-            return "Commands:\n" +
-                    "/start\n" +
-                    "/help\n";
-        } else {return "You typed: " + incomingText;}
-    }
+
     @Override
     public void onUpdateReceived(Update update){
       Message msg = update.getMessage();
       long chatId = msg.getChatId();
       String text = msg.getText();
 
-      String reply = buildResponse(text);
+      String reply = logic.buildResponse(text);
 
       SendMessage sm = SendMessage.builder()
         .chatId(Long.toString(chatId))
