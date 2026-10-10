@@ -6,7 +6,8 @@ public class CityGame {
     private boolean isGamestarted = false;
     private List<String> usedCities = new ArrayList<>();
     private char requiredLetter = 'w';
-    private String[] dictionary = {"washington", "nairobi", "oslo", "ottawa"};
+    private String[] dictionary = {"washington","Ufa","tyumen","tomsk","saratov","yaroslavl","krasnoyarsk","voronezh","perm","khabarovsk","irkutsk","vladivostok","volgograd", "oslo", "ottawa","saint Petersburg","Kazan" ,"novosibirsk" ,"yekaterinburg","rostov-on-Don","samara","omsk" +
+            ""};
 
     public String handleInput(String input) {
         if (input.equals("/start")) {
