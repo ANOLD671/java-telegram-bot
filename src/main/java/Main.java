@@ -9,7 +9,7 @@ public class Main {
 
         TelegramBotsApi(DefaultBotSession.class);
          botsApi.registerBot(new Echo_class() );
-        System.out.println("Bot is running,babay!");
+        System.out.println("Bot is running,baby!");
 
     }
 }

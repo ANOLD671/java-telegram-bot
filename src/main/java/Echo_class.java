@@ -12,10 +12,16 @@ import java.util.Map;
  * Default telegram bot class
  **/
 
-public class Echo_class extends
-        TelegramLongPollingBot {
-    private final Map<Long, CityGame> userGames
+public class Echo_class extends TelegramLongPollingBot {
+    /*private final Map<Long, CityGame> userGames
             = new HashMap<>();
+
+     */
+
+    private final UserRepository repository = new UserRepository();
+    private final ProfileService profileService = new ProfileService(repository);
+
+
     private final Dotenv dotenv = Dotenv. load();
 
 
@@ -31,8 +37,10 @@ public class Echo_class extends
         if (update.hasMessage() && update.getMessage().hasText()){
             long userId = update.getMessage().getFrom().getId();
             String text = update.getMessage().getText();
-            userGames.putIfAbsent(userId, new CityGame());
-            String reply = userGames.get(userId).handleInput(text);
+            //userGames.putIfAbsent(userId, new CityGame());
+           // String reply = userGames.get(userId).handleInput(text);
+            String firstName = update.getMessage().getFrom().getFirstName();
+            String reply = profileService.handle(userId,firstName, text);
             sendText(update.getMessage().getChatId(),reply);
 
         }
