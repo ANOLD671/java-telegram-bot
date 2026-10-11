@@ -20,7 +20,7 @@ public class ProfileService {
                 return "Already registered shit!!!";
 
                 repository.save(new User(userId,userName));
-                return "✅profile created baby!! 100 coins ✨ added🎆";
+                return "✅Hello " + userName + " your profile has been created!! 100 coins ✨ added🎆\n press /profile to view your profile baby!!\nThank you for choosing our service!!";
 
         }
 
@@ -39,7 +39,7 @@ public class ProfileService {
         }
 
         if (command.startsWith("/setteam")) {
-            String team = command.replace("/setteam   ", "");
+            String team = command.replace("/setteam", " ");
             user.setFavoriteTeam(team);
             return "✅Favorite team set to:" + team;
         }
