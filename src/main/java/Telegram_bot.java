@@ -3,19 +3,22 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import io.github.cdimascio.dotenv.Dotenv;
 
 /**
  * Default telegram bot class
  **/
 
-public class Echo_class extends TelegramLongPollingBot {
+public class Telegram_bot extends TelegramLongPollingBot {
 
-    private final Dotenv dotenv = Dotenv.load();
     private final Logic logic;
+    private final String botToken;
+    private final String botUsername;
 
-    public Echo_class(Logic logic) {
+
+    public Telegram_bot(Logic logic, String botToken, String botUsername) {
         this.logic = logic;
+        this.botToken = botToken;
+        this.botUsername = botUsername;
     }
 
     /**
@@ -23,7 +26,7 @@ public class Echo_class extends TelegramLongPollingBot {
      */
     @Override
     public String getBotUsername(){
-        return dotenv.get("BOT_USERNAME", "YOUR_BOT_NAME");
+        return botUsername;
     }
 
     /**
@@ -31,7 +34,7 @@ public class Echo_class extends TelegramLongPollingBot {
      */
     @Override
     public String getBotToken(){
-        return dotenv.get("BOT_TOKEN");
+        return botToken;
     }
 
     /**

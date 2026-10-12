@@ -1,13 +1,19 @@
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+import io.github.cdimascio.dotenv.Dotenv;
+
 /** Start program **/
 
 public class Main {
     public void main(String[] args)
-        throws Exception{
-        var botsApi = new TelegramBotsApi(DefaultBotSession.class); // Init bot API
+        throws Exception {
+        Dotenv dotenv = Dotenv.load();
+        String token = dotenv.get("BOT_TOKEN");
+        String username = dotenv.get("BOT_USERNAME");
         Logic logic = new Logic();
-        botsApi.registerBot(new Echo_class(logic));                    // Bot registration
+
+        TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class); // Init bot API
+        botsApi.registerBot(new Telegram_bot(logic, token, username));          // Bot registration
         System.out.println("Bot is running,babay!");
 
     }
