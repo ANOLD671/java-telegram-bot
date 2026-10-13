@@ -5,7 +5,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 /**
- * Telegram adapter for the bot.
  * This class is responsible for the Telegram-specific part of the bot:
  * receiving "Update" objects from Telegram, delegating the actual
  * response generation to "Logic", and sending the resulting text
