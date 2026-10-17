@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * testing bot logic
@@ -14,28 +14,34 @@ class TelegramBotTest {
     @Test
     void start_test() {
         String reply = bot.buildResponse("/start");
-        assertEquals(
-                "Hello! I am echo-bot. I will repeat your messages\n" +
-                        "Type /help to see all commands",
-                reply
-        );
+        Assertions.assertEquals("Hello! I am echo-bot. I will repeat your messages\n" +
+                        "Type /help to see all commands", reply);
     }
 
     /**
-     * testing "echo" command
+     * testing logic's answer for rusiian text
      */
     @Test
     void regularText_isEchoed() {
-        assertEquals("You typed: привет", bot.buildResponse("привет"));
+        String reply = bot.buildResponse("привет");
+        Assertions.assertEquals ("You typed: привет", reply);
     }
 
+    /**
+     * testing logic's answer for english text
+     */
     @Test
     void englishText_isEchoed() {
-        assertEquals("You typed: hello world", bot.buildResponse("hello world"));
+        String reply = bot.buildResponse("hello world");
+        Assertions.assertEquals("You typed: hello world", reply);
     }
 
+    /**
+     * testing logic's answer with a lot of spaces
+     */
     @Test
     void textWithSpaces_isEchoedExactly() {
-        assertEquals("You typed:   много   пробелов  ", bot.buildResponse("  много   пробелов  "));
+        String reply = bot.buildResponse("  много   пробелов  ");
+        Assertions.assertEquals("You typed:   много   пробелов  ", reply);
     }
 }

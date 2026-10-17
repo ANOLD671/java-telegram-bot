@@ -15,7 +15,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
  * Instances are created by the application bootstrap,
  * which supplies the shared "Logic" instance and the bot credentials.
  */
-public class Telegram_bot extends TelegramLongPollingBot {
+public class TelegramBot extends TelegramLongPollingBot {
 
     /**
      * Shared, platform-independent business logic.
@@ -23,30 +23,21 @@ public class Telegram_bot extends TelegramLongPollingBot {
      * by other platform adapters.
      */
     private final Logic logic;
-    private final String botToken;
-    private final String botUsername;
 
     /**
-     * Creates a new Telegram bot adapter.
-     *
-     * @param logic       shared business logic;
-     * @param botToken    Telegram bot token issued by BotFather
-     * @param botUsername Telegram bot username without the leading "@"
+     * Bot username (without the leading "@").
      */
-    public Telegram_bot(Logic logic, String botToken, String botUsername) {
+    private final String botUsername;
+
+    public TelegramBot(Logic logic, String botToken, String botUsername) {
+        super(botToken);
         this.logic = logic;
-        this.botToken = botToken;
         this.botUsername = botUsername;
     }
 
     @Override
     public String getBotUsername(){
         return botUsername;
-    }
-
-    @Override
-    public String getBotToken(){
-        return botToken;
     }
 
     @Override
