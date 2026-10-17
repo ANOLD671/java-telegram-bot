@@ -3,6 +3,11 @@
  **/
 
 public class Logic {
+    /**
+     * resolving incoming text
+     * @param incomingText
+     * @return modified text
+     */
     public String buildResponse(String incomingText) {
         if ("/start".equals(incomingText)) {
             return "Hello! I am echo-bot. I will repeat your messages\n" +

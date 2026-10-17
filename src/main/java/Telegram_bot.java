@@ -6,15 +6,12 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 /**
  * Telegram adapter for the bot.
- * <p>
  * This class is responsible for the Telegram-specific part of the bot:
  * receiving "Update" objects from Telegram, delegating the actual
  * response generation to "Logic", and sending the resulting text
  * back to the user via "SendMessage()".
- *
  * All business logic lives in class "Logic";
  * this class only knows how to talk to Telegram.
- *
  * Instances are created by the application bootstrap,
  * which supplies the shared "Logic" instance and the bot credentials.
  */
@@ -50,34 +47,16 @@ public class Telegram_bot extends TelegramLongPollingBot {
         this.botUsername = botUsername;
     }
 
-    /**
-     * @return bot username
-     */
     @Override
     public String getBotUsername(){
         return botUsername;
     }
 
-    /**
-     * @return bot`s telegram token
-     */
     @Override
     public String getBotToken(){
         return botToken;
     }
 
-    /**
-     * Called automatically by the TelegramBots library whenever Telegram
-     * delivers a new event to this bot.
-     *
-     * Extracts the chat id and the message text from the incoming
-     * "Update", asks "Logic" for the response text, and sends
-     * it back to the originating chat.
-     *
-     * @param update incoming event from Telegram; must contain a text message
-     * @throws RuntimeException if the response could not be delivered
-     *                          to Telegram
-     */
     @Override
     public void onUpdateReceived(Update update){
       Message msg = update.getMessage();
