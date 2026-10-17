@@ -25,36 +25,19 @@ public class Telegram_bot extends TelegramLongPollingBot {
     private final Logic logic;
 
     /**
-     * Bot token issued by BotFather.
-     */
-    private final String botToken;
-
-    /**
      * Bot username (without the leading "@").
      */
     private final String botUsername;
 
-    /**
-     * Creates a new Telegram bot adapter.
-     *
-     * @param logic       shared business logic;
-     * @param botToken    Telegram bot token issued by BotFather
-     * @param botUsername Telegram bot username without the leading "@"
-     */
     public Telegram_bot(Logic logic, String botToken, String botUsername) {
+        super(botToken);
         this.logic = logic;
-        this.botToken = botToken;
         this.botUsername = botUsername;
     }
 
     @Override
     public String getBotUsername(){
         return botUsername;
-    }
-
-    @Override
-    public String getBotToken(){
-        return botToken;
     }
 
     @Override
