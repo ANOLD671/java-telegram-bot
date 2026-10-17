@@ -15,7 +15,7 @@ public class Main {
         Logic logic = new Logic();
 
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class); // Init bot API
-        botsApi.registerBot(new Telegram_bot(logic, token, username));          // Bot registration
+        botsApi.registerBot(new TelegramBot(logic, token, username));          // Bot registration
         System.out.println("Bot is running!");
 
     }
