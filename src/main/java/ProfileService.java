@@ -19,7 +19,7 @@ public class ProfileService {
             if (repository.exists(userId))
                 return "Already registered shit!!!";
 
-                repository.save(new User(userId,userName));
+            repository.save(new User(userId,userName));
                 return "✅Hello " + userName + " your profile has been created!! 100 coins ✨ added🎆\n press /profile to view your profile baby!!\nThank you for choosing our service!!";
 
         }
@@ -34,9 +34,6 @@ public class ProfileService {
         }
         User user = repository.findById(userId);
 
-        if (command.equals("/profile")) {
-            return "👤 profile name : " + " " + userName +"\n💰 Balance:"+ user.getBalance() + "coins ✨" + "\n⚽ Team:" + user.getFavoriteTeam();
-        }
 
         if (command.startsWith("/setteam")) {
             String team = command.replace("/setteam", " ");
