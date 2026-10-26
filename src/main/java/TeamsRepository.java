@@ -9,12 +9,20 @@ import java.util.stream.Collectors;
  * Repository class responsible for loading and providing the list of valid football teams.
  */
 public class TeamsRepository {
+
+    /** The list of valid football teams. */
     private List<String> teams = new ArrayList<>();
 
+    /**
+     * Constructs the repository and loads the teams from the file.
+     */
     public TeamsRepository() {
         loadTeamsFromFile();
     }
 
+    /**
+     * Reads the {@code teams.txt} file from resources and populates the teams list.
+     */
     private void loadTeamsFromFile() {
         try (InputStream is = getClass().getResourceAsStream("/teams.txt")) {
             if (is == null) {
@@ -32,6 +40,11 @@ public class TeamsRepository {
         }
     }
 
+    /**
+     * Retrieves the list of all loaded teams.
+     *
+     * @return A {@link List} of team names.
+     */
     public List<String> getTeams() {
         return teams;
     }

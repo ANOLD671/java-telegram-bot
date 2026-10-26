@@ -1,13 +1,36 @@
+/**
+ * The core logic class for the Football Bot.
+ * Handles all text commands received from the user and processes the business rules.
+ */
 public class Logic {
+
+    /** The repository responsible for storing user profiles. */
     private final UserRepository repository;
+
+    /** The repository responsible for providing the list of valid RPL teams. */
     private final TeamsRepository teamsRepo = new TeamsRepository();
 
+    /**
+     * Constructs the logic layer with the required user data repository.
+     *
+     * @param repository The storage mechanism for user profiles.
+     */
     public Logic(UserRepository repository) {
         this.repository = repository;
     }
 
+    /**
+     * The main entry point for processing user commands.
+     *
+     * @param userId   The unique Telegram ID of the user sending the message.
+     * @param userName The first name of the user.
+     * @param command  The raw text message sent by the user.
+     * @return A {@link String} response to be sent back to the user.
+     */
     public String handle(long userId, String userName, String command) {
-        if (command == null) return "Invalid command.";
+        if (command == null) {
+            return "Invalid command.";
+        }
 
         if (command.equals("/start")) {
             return "Welcome " + userName + " to the Football Bot!\nUse /listOfTeams to see available teams, then /setteam <name> to pick your club!";
@@ -19,7 +42,9 @@ public class Logic {
 
         if (command.startsWith("/setteam")) {
             String teamName = command.replace("/setteam", "").trim();
-            if (teamName.isEmpty()) return "Please specify a team name. Example: /setteam Зенит";
+            if (teamName.isEmpty()) {
+                return "Please specify a team name. Example: /setteam Зенит";
+            }
 
             String matchedTeam = teamsRepo.getTeams().stream()
                     .filter(t -> t.equalsIgnoreCase(teamName))
