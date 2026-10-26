@@ -2,52 +2,50 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import io.github.cdimascio.dotenv.Dotenv;
 
 /**
- * Default telegram bot class
- **/
-
+ * The Telegram interface for the bot. Handles network communication.
+ */
 public class TelegramBot extends TelegramLongPollingBot {
 
-    private final UserRepository repository = new UserRepository();
-    private final ProfileService profileService = new ProfileService(repository);
+    private final String botUsername;
+    private final Logic logic;
 
-
-    private final Dotenv dotenv = Dotenv.load();
-
-
-    public String getBotUsername() {
-        return
-                dotenv.get("BOT_USERNAME", "YOUR_BOT_NAME");
+    public TelegramBot(String botToken, String botUsername) {
+        super(botToken);
+        this.botUsername = botUsername;
+        this.logic = new Logic(new UserRepository()); // Initialize your new Logic!
     }
-
-
-    public TelegramBot(String Bot_Token) {
-        super(Bot_Token);
-    }
-
 
     @Override
-    public void onUpdateReceived(Update update){
-        if (update.hasMessage() && update.getMessage().hasText()){
-            long userId = update.getMessage().getFrom().getId();
-            String text = update.getMessage().getText();
-            String firstName = update.getMessage().getFrom().getFirstName();
-            String reply = profileService.handle(userId,firstName, text);
-            sendText(update.getMessage().getChatId(),reply);
+    public String getBotUsername() {
+        return botUsername;
+    }
 
+    @Override
+    public void onUpdateReceived(Update update) {
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            long userId = update.getMessage().getFrom().getId();
+            String userName = update.getMessage().getFrom().getFirstName();
+            String text = update.getMessage().getText();
+            long chatId = update.getMessage().getChatId();
+
+            // Call your Logic class instead of ProfileService
+            String reply = logic.handle(userId, userName, text);
+
+            sendText(chatId, reply);
         }
     }
 
-    private void sendText(long chatId, String text){
+    private void sendText(long chatId, String text) {
         SendMessage sm = SendMessage.builder()
                 .chatId(Long.toString(chatId))
                 .text(text).build();
-        try{execute(sm);}
-        catch (TelegramApiException e){
-            e.printStackTrace();
+        try {
+            execute(sm);
+        } catch (TelegramApiException e) {
+            // Using printStackTrace is okay for now, but we use System.err for standard practice
+            System.err.println("Failed to send message: " + e.getMessage());
         }
     }
 }
-

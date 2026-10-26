@@ -1,25 +1,56 @@
-mport java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-/**
- * bot logic class implementing methods for handling user data
- **/
-
 public class Logic {
-    private final ConcurrentHashMap<Long, User> users = new ConcurrentHashMap<>();
+    private final UserRepository repository;
+    private final TeamsRepository teamsRepo = new TeamsRepository();
 
-    public String processMessage(Long chatId, String incomingText) {
+    public Logic(UserRepository repository) {
+        this.repository = repository;
+    }
 
-        User currentUser;
-        if (!users.containsKey()) {
-            users.put(chatId, new User(chatId));}
-        currentUser = users.get(chatId);
+    public String handle(long userId, String userName, String command) {
+        if (command == null) return "Invalid command.";
 
-        if ("/help".equals(incomingText)) {
-            return "/listOfTeams - show a list of teams for currnt season\n" +
-                    "/profile - show Your current profile\n" +
-                    "/setteam <team name> - set Your favorite team. (only teams from the list can be selected)\n";
+        if (command.equals("/start")) {
+            return "Welcome " + userName + " to the Football Bot!\nUse /listOfTeams to see available teams, then /setteam <name> to pick your club!";
         }
-        return "Unknown command\n" +
-                "Type /help to list existing commands";
+
+        if (command.equals("/listOfTeams")) {
+            return "🏆 Current Season Teams:\n" + String.join("\n", teamsRepo.getTeams());
+        }
+
+        if (command.startsWith("/setteam")) {
+            String teamName = command.replace("/setteam", "").trim();
+            if (teamName.isEmpty()) return "Please specify a team name. Example: /setteam Зенит";
+
+            String matchedTeam = teamsRepo.getTeams().stream()
+                    .filter(t -> t.equalsIgnoreCase(teamName))
+                    .findFirst()
+                    .orElse(null);
+
+            if (matchedTeam == null) {
+                return "❌ *" + teamName + "* is not in the league list! Check /listOfTeams.";
+            }
+
+            UserProfile user = repository.findById(userId);
+            if (user == null) {
+                user = new UserProfile(userId, userName);
+            }
+            user.setFavoriteTeam(matchedTeam);
+            repository.save(user);
+            return "⭐ Your favorite team is now: " + matchedTeam;
+        }
+
+        if (command.equals("/profile")) {
+            UserProfile user = repository.findById(userId);
+            if (user == null || user.getFavoriteTeam() == null) {
+                return "👤 Profile Name: " + userName + "\n❤️ Favorite Team: None selected yet. Use /setteam to pick one!";
+            }
+            return "👤 Profile Name: " + user.getName() + "\n❤️ Favorite Team: " + user.getFavoriteTeam();
+        }
+
+        if (command.equals("/help")) {
+            return "Available commands:\n/start\n/listOfTeams\n/setteam <team>\n/profile";
+        }
+
+        return "Unknown command. Type /help for options.";
     }
 }

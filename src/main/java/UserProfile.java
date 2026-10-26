@@ -1,29 +1,25 @@
-/**
- * single-user data class
- */
-
 public class UserProfile {
-    private final long id;
+    private final long telegramId;
+    private final String name;
     private String favoriteTeam;
 
-    public UserProfile(long id) {
-        this.id = id;
-        this.favoriteTeam = "Not selected";
+    public UserProfile(long telegramId, String name) {
+        this.telegramId = telegramId;
+        this.name = name;
     }
-    /**
-     * @return long id
-     */
-    public long getId() {return id;};
 
-    /**
-     * favorite team getter
-     * @return String favoriteTeam
-     */
-    public String getFavoriteTeam() {return favoriteTeam;};
+    public long getTelegramId() {
+        return telegramId;
+    }
 
-    /** favorite team setter
-     * @param favoriteTeam;
-     */
+    public String getName() {
+        return name;
+    }
+
+    public String getFavoriteTeam() {
+        return favoriteTeam;
+    }
+
     public void setFavoriteTeam(String favoriteTeam) {
         this.favoriteTeam = favoriteTeam;
     }
