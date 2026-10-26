@@ -1,25 +1,81 @@
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 /**
- * bot logic class implementing methods for handling user data
- **/
-
+ * The core logic class for the Football Bot.
+ * Handles all text commands received from the user and processes the business rules.
+ */
 public class Logic {
-    private final ConcurrentHashMap<Long, UserProfile> users = new ConcurrentHashMap<>();
 
-    public String processMessage(Long chatId, String incomingText) {
+    /** The repository responsible for storing user profiles. */
+    private final UserRepository repository;
 
-        UserProfile currentUser;
-        if (!users.containsKey(chatId)) {
-            users.put(chatId, new UserProfile(chatId));}
-        currentUser = users.get(chatId);
+    /** The repository responsible for providing the list of valid RPL teams. */
+    private final TeamsRepository teamsRepo = new TeamsRepository();
 
-        if ("/help".equals(incomingText)) {
-            return "/listOfTeams - show a list of teams for currnt season\n" +
-                    "/profile - show Your current profile\n" +
-                    "/setteam <team name> - set Your favorite team. (only teams from the list can be selected)\n";
+    /**
+     * Constructs the logic layer with the required user data repository.
+     *
+     * @param repository The storage mechanism for user profiles.
+     */
+    public Logic(UserRepository repository) {
+        this.repository = repository;
+    }
+
+    /**
+     * The main entry point for processing user commands.
+     *
+     * @param userId   The unique Telegram ID of the user sending the message.
+     * @param userName The first name of the user.
+     * @param command  The raw text message sent by the user.
+     * @return A {@link String} response to be sent back to the user.
+     */
+    public String handle(long userId, String userName, String command) {
+        if (command == null) {
+            return "Invalid command.";
         }
-    return "Unknown command\n" +
-            "Type /help to list existing commands";
+
+        if (command.equals("/start")) {
+            return "Welcome " + userName + " to the Football Bot!\nUse /listOfTeams to see available teams, then /setteam <name> to pick your club!";
+        }
+
+        if (command.equals("/listOfTeams")) {
+            return "🏆 Current Season Teams:\n" + String.join("\n", teamsRepo.getTeams());
+        }
+
+        if (command.startsWith("/setteam")) {
+            String teamName = command.replace("/setteam", "").trim();
+            if (teamName.isEmpty()) {
+                return "Please specify a team name. Example: /setteam Зенит";
+            }
+
+            String matchedTeam = teamsRepo.getTeams().stream()
+                    .filter(t -> t.equalsIgnoreCase(teamName))
+                    .findFirst()
+                    .orElse(null);
+
+            if (matchedTeam == null) {
+                return "❌ *" + teamName + "* is not in the league list! Check /listOfTeams.";
+            }
+
+            UserProfile user = repository.findById(userId);
+            if (user == null) {
+                user = new UserProfile(userId, userName);
+            }
+            user.setFavoriteTeam(matchedTeam);
+            repository.save(user);
+            return "⭐ Your favorite team is now: " + matchedTeam;
+        }
+
+        if (command.equals("/profile")) {
+            UserProfile user = repository.findById(userId);
+            if (user == null || user.getFavoriteTeam() == null) {
+                return "👤 Profile Name: " + userName + "\n❤️ Favorite Team: None selected yet. Use /setteam to pick one!";
+            }
+            return "👤 Profile Name: " + user.getName() + "\n❤️ Favorite Team: " + user.getFavoriteTeam();
+        }
+
+        if (command.equals("/help")) {
+            return "Available commands:\n/start\n/listOfTeams\n/setteam <team>\n/profile";
+        }
+
+        return "Unknown command. Type /help for options.";
     }
 }

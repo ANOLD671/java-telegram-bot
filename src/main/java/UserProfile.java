@@ -1,28 +1,59 @@
 /**
- * single-user data class
+ * Represents a user's profile in the system, storing their Telegram ID, name, and favorite team.
  */
-
 public class UserProfile {
-    private final long id;
+
+    /** The unique identifier for the user in Telegram. */
+    private final long telegramId;
+
+    /** The user's first name. */
+    private final String name;
+
+    /** The user's chosen favorite football team. */
     private String favoriteTeam;
 
-    public UserProfile(long id) {
-        this.id = id;
-        this.favoriteTeam = "Not selected";
+    /**
+     * Constructs a new UserProfile.
+     *
+     * @param telegramId The unique Telegram ID of the user.
+     * @param name       The first name of the user.
+     */
+    public UserProfile(long telegramId, String name) {
+        this.telegramId = telegramId;
+        this.name = name;
     }
-    /**
-     * @return long id
-     */
-    public long getId() {return id;};
 
     /**
-     * favorite team getter
-     * @return String favoriteTeam
+     * Gets the user's Telegram ID.
+     *
+     * @return The Telegram ID.
      */
-    public String getFavoriteTeam() {return favoriteTeam;};
+    public long getTelegramId() {
+        return telegramId;
+    }
 
-    /** favorite team setter
-     * @param favoriteTeam;
+    /**
+     * Gets the user's name.
+     *
+     * @return The name.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Gets the user's favorite team.
+     *
+     * @return The favorite team, or {@code null} if none is selected.
+     */
+    public String getFavoriteTeam() {
+        return favoriteTeam;
+    }
+
+    /**
+     * Sets the user's favorite team.
+     *
+     * @param favoriteTeam The name of the team to set.
      */
     public void setFavoriteTeam(String favoriteTeam) {
         this.favoriteTeam = favoriteTeam;

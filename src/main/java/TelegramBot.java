@@ -1,72 +1,51 @@
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 /**
- * Telegram adapter for the bot.
- * This class is responsible for the Telegram-specific part of the bot:
- * receiving "Update" objects from Telegram, delegating the actual
- * response generation to "Logic", and sending the resulting text
- * back to the user via "SendMessage()".
- * All business logic lives in class "Logic";
- * this class only knows how to talk to Telegram.
- * Instances are created by the application bootstrap,
- * which supplies the shared "Logic" instance and the bot credentials.
+ * The Telegram interface for the bot. Handles network communication.
  */
 public class TelegramBot extends TelegramLongPollingBot {
 
-    /**
-     * Shared, platform-independent business logic.
-     * Injected from outside so that the same instance can be reused
-     * by other platform adapters.
-     */
-    private final Logic logic;
-    private final String botToken;
     private final String botUsername;
+    private final Logic logic;
 
-    /**
-     * Creates a new Telegram bot adapter.
-     *
-     * @param logic       shared business logic;
-     * @param botToken    Telegram bot token issued by BotFather
-     * @param botUsername Telegram bot username without the leading "@"
-     */
-    public TelegramBot(Logic logic, String botToken, String botUsername) {
-        this.logic = logic;
-        this.botToken = botToken;
+    public TelegramBot(String botToken, String botUsername) {
+        super(botToken);
         this.botUsername = botUsername;
+        this.logic = new Logic(new UserRepository()); // Initialize your new Logic!
     }
 
     @Override
-    public String getBotUsername(){
+    public String getBotUsername() {
         return botUsername;
     }
 
     @Override
-    public String getBotToken(){
-        return botToken;
+    public void onUpdateReceived(Update update) {
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            long userId = update.getMessage().getFrom().getId();
+            String userName = update.getMessage().getFrom().getFirstName();
+            String text = update.getMessage().getText();
+            long chatId = update.getMessage().getChatId();
+
+            // Call your Logic class instead of ProfileService
+            String reply = logic.handle(userId, userName, text);
+
+            sendText(chatId, reply);
+        }
     }
 
-    @Override
-    public void onUpdateReceived(Update update){
-      Message msg = update.getMessage();
-      long chatId = msg.getChatId();
-      String text = msg.getText();
-
-      String reply = logic.processMessage(chatId, text);
-
-      SendMessage sm = SendMessage.builder()
-        .chatId(Long.toString(chatId))
-        .text(reply)
-        .build();
-
-      try{
-          execute(sm);
-      } catch (TelegramApiException e) {
-          throw new RuntimeException(e);
-      }
-
+    private void sendText(long chatId, String text) {
+        SendMessage sm = SendMessage.builder()
+                .chatId(Long.toString(chatId))
+                .text(text).build();
+        try {
+            execute(sm);
+        } catch (TelegramApiException e) {
+            // Using printStackTrace is okay for now, but we use System.err for standard practice
+            System.err.println("Failed to send message: " + e.getMessage());
+        }
     }
 }

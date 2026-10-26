@@ -1,22 +1,36 @@
+import io.github.cdimascio.dotenv.Dotenv;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 /**
- * Application entry point for the Telegram bot.
+ * The application entry point responsible for initializing the Telegram Bot.
  */
-
 public class Main {
-    public void main(String[] args)
-        throws Exception {
-        Dotenv dotenv = Dotenv.load();
+
+    /**
+     * The main method that serves as the starting point of the application.
+     * Loads configuration from the .env file and registers the bot.
+     *
+     * @param args Command-line arguments (not used).
+     * @throws Exception If the bot fails to initialize or register with the Telegram API.
+     */
+    public static void main(String[] args) throws Exception {
+        System.out.println("🔍 Initializing configuration...");
+
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
         String token = dotenv.get("BOT_TOKEN");
         String username = dotenv.get("BOT_USERNAME");
-        Logic logic = new Logic();
 
-        TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class); // Init bot API
-        botsApi.registerBot(new TelegramBot(logic, token, username));          // Bot registration
-        System.out.println("Bot is running!");
+        if (token == null || token.trim().isEmpty() || username == null || username.trim().isEmpty()) {
+            System.out.println("⚠️ [WARNING] BOT_TOKEN or BOT_USERNAME is missing. Exiting gracefully.");
+            return;
+        }
 
+        TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
+        botsApi.registerBot(new TelegramBot(token, username));
+        System.out.println("🚀 Football Bot is successfully up and running!");
     }
 }
