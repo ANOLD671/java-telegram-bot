@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e358a8e9-10cd-4c07-ac74-1c623e1cbe9b" name="Changes" comment="try">
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Telegram_bot.class" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="test1" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="test1" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ANOLD671&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ANOLD671/java-telegram-bot.git&quot;,
+    &quot;accountId&quot;: &quot;276a2ffc-72c9-4ed3-8cc5-ee503da394dd&quot;
+  }
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0380225387018471" />
+      <entry key="MS500" value="1.8376005066696532" />
+      <entry key="S2" value="2.601764330899269" />
+      <entry key="S5" value="2.831257863885683" />
+      <entry key="S10" value="3.010957894012895" />
+      <entry key="S30" value="4.869622460693545" />
+      <entry key="S60" value="9.523292526037954" />
+      <entry key="M2" value="21.458939958430083" />
+      <entry key="M5" value="47.24135688817134" />
+      <entry key="M10" value="68.62430422420535" />
+      <entry key="M15" value="82.51901681887969" />
+      <entry key="M30" value="116.45781121157758" />
+      <entry key="H1" value="169.39674234064347" />
+      <entry key="H2" value="226.3517382418455" />
+      <entry key="H4" value="270.2015800276809" />
+      <entry key="D1" value="318.67221495941146" />
+      <entry key="W1" value="328.34443496267545" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="5.231413798461915E-178" />
+      <entry key="S2" value="4.782497684025195E-45" />
+      <entry key="S5" value="1.870088471035983E-18" />
+      <entry key="S10" value="1.3685916669682039E-9" />
+      <entry key="S30" value="0.0012586416394759763" />
+      <entry key="S60" value="0.052698267886834675" />
+      <entry key="M2" value="0.4185987961321419" />
+      <entry key="M5" value="1.8120538914527338" />
+      <entry key="M10" value="4.403796788231439" />
+      <entry key="M15" value="7.118102138483504" />
+      <entry key="M30" value="13.682199243677859" />
+      <entry key="H1" value="21.119913611442676" />
+      <entry key="H2" value="27.55030219984086" />
+      <entry key="H4" value="32.075160927365914" />
+      <entry key="D1" value="36.889778129663604" />
+      <entry key="W1" value="37.83797071889999" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.989314471934671" />
+      <entry key="MS500" value="1.82125437621916" />
+      <entry key="S2" value="2.596044342223731" />
+      <entry key="S5" value="2.8287703291453146" />
+      <entry key="S10" value="3.0094267769239695" />
+      <entry key="S30" value="4.852891019620441" />
+      <entry key="S60" value="9.533544236515986" />
+      <entry key="M2" value="21.817594369009772" />
+      <entry key="M5" value="48.99304131160396" />
+      <entry key="M10" value="72.97258812563751" />
+      <entry key="M15" value="89.584666053341" />
+      <entry key="M30" value="130.0962104670705" />
+      <entry key="H1" value="190.48521605680355" />
+      <entry key="H2" value="253.88239643421446" />
+      <entry key="H4" value="302.26560233618983" />
+      <entry key="D1" value="355.55991277854883" />
+      <entry key="W1" value="366.18210235514135" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="3Kd9EmimT1pvlvDn2Nytej6UZXR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Maven.java-telegram-bot [test].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "task-2",
+    "git.auto.fetch.suggestion.counter": "3",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.jshint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.jshint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-34e2839f716b-intellij.indexing.shared.core-IU-262.9437.185" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.9437.185" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e358a8e9-10cd-4c07-ac74-1c623e1cbe9b" name="Changes" comment="" />
+      <created>1791876474126</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1791876474126</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="anold's-dev" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fixed" />
+    <MESSAGE value="try" />
+    <option name="LAST_COMMIT_MESSAGE" value="try" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.telegram.telegrambots.meta.exceptions.TelegramApiException" package="org.telegram.telegrambots.meta.exceptions" />
+          <option name="timeStamp" value="4" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

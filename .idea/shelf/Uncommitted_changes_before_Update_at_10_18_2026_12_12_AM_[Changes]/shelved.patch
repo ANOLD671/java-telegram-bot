@@ -1,0 +1,15 @@
+Index: .env
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.env b/.env
+new file mode 100644
+--- /dev/null	(date 1791887596069)
++++ b/.env	(date 1791887596069)
+@@ -0,0 +1,2 @@
++BOT_TOKEN=8799668869:AAEM9-5-c8UCEqlios3M093Lyk6aRkbEXdI
++BOT_USERNAME=sporttv5671_bot
+\ No newline at end of file
+diff --git a/.ai/mcp/mcp.json b/.ai/mcp/mcp.json
+new file mode 100644
