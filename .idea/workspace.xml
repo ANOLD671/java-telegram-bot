@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="795ae466-26d2-4161-98f8-20245c42598b" name="Changes" comment="- TelegramBot class adapted for new Logic class format" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="GRIGORIY &lt;ytuber006@gmail.com&gt;" />
+        <option value="GRIGORIY" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="grisha-dev" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;PrivetMAMA&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ANOLD671/java-telegram-bot.git&quot;,
+    &quot;accountId&quot;: &quot;e281ffa0-0da6-48ee-b4be-043805e5a11b&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\maven rep" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3KH9NvGgJzVCu6B1HQuuFButKYm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Maven.java-telegram-bot [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.jshint": "true",
+    "node.js.selected.package.jshint": "",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-a203e0a19954-intellij.indexing.shared.core-IU-262.10315.125" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.10315.125" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="795ae466-26d2-4161-98f8-20245c42598b" name="Changes" comment="" />
+      <created>1791203590054</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1791203590054</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="45ea0c8f-fdbd-46e8-8e59-c24c3bb36579" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="45ea0c8f-fdbd-46e8-8e59-c24c3bb36579">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="- Added Java-docs&#10;&#10;- changed Java version in misc.xml from 26 to 25" />
+    <MESSAGE value="- Added answers for commands &quot;/start&quot; and &quot;/help&quot;&#10;&#10;- BotTOken and BotUsername removed from open-source code to .env file" />
+    <MESSAGE value="- &quot;BuildResponse()&quot; separated from &quot;onUpdateReceived()&quot; function.&#10;&#10;- Added tests for &quot;buildResponse()&quot; function." />
+    <MESSAGE value="main update" />
+    <MESSAGE value="main update comments" />
+    <MESSAGE value="- Added new class &quot;logic&quot;, wich contains all logical bot's logical operations. &#10;&#10;- Logic functions separated from Echo_class." />
+    <MESSAGE value="- Echo_class renamed to Telegram_bot&#10;- The operations to obtain the botUsername and botToken have been moved outside the class. They are now retrieved in `main` and passed to the `Telegram_bot` class constructor." />
+    <MESSAGE value="-Added javadocs in &quot;Main.java&quot; and &quot;Telegram_bot.java&quot;" />
+    <MESSAGE value="-&quot;.idea&quot; removed from git" />
+    <MESSAGE value="-Added javadocs" />
+    <MESSAGE value="-Added javadocs&#10;&#10;-Edited .gitignore" />
+    <MESSAGE value="-Deleted deprecated overrided methods from TelegramBot class" />
+    <MESSAGE value="-Changed testing code" />
+    <MESSAGE value="- Added concurrentHashMap library from java to store users data&#10;- Adaptation of the Logic class to work with task commands has begun.&#10;- Added new class UserProfile, which contains userId and user's favorite team" />
+    <MESSAGE value="- TelegramBot class adapted for new Logic class format" />
+    <option name="LAST_COMMIT_MESSAGE" value="- TelegramBot class adapted for new Logic class format" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
