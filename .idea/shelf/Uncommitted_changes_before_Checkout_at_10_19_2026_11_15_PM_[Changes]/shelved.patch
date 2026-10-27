@@ -1,0 +1,17 @@
+Index: src/test/java/TelegramBotTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import org.junit.jupiter.api.Test;\r\nimport org.junit.jupiter.api.Assertions;\r\n\r\n/**\r\n * testing bot logic\r\n */\r\nclass TelegramBotTest {\r\n\r\n    private final Logic bot = new Logic();\r\n\r\n    /**\r\n     * testing \"/start\" command\r\n     */\r\n    @Test\r\n    void start_test() {\r\n        String reply = bot.buildResponse(\"/start\");\r\n        Assertions.assertEquals(\"Hello! I am echo-bot. I will repeat your messages\\n\" +\r\n                        \"Type /help to see all commands\", reply);\r\n    }\r\n\r\n    /**\r\n     * testing logic's answer for rusiian text\r\n     */\r\n    @Test\r\n    void regularText_isEchoed() {\r\n        String reply = bot.buildResponse(\"привет\");\r\n        Assertions.assertEquals (\"You typed: привет\", reply);\r\n    }\r\n\r\n    /**\r\n     * testing logic's answer for english text\r\n     */\r\n    @Test\r\n    void englishText_isEchoed() {\r\n        String reply = bot.buildResponse(\"hello world\");\r\n        Assertions.assertEquals(\"You typed: hello world\", reply);\r\n    }\r\n\r\n    /**\r\n     * testing logic's answer with a lot of spaces\r\n     */\r\n    @Test\r\n    void textWithSpaces_isEchoedExactly() {\r\n        String reply = bot.buildResponse(\"  много   пробелов  \");\r\n        Assertions.assertEquals(\"You typed:   много   пробелов  \", reply);\r\n    }\r\n}
+===================================================================
+diff --git a/src/test/java/TelegramBotTest.java b/src/test/java/TelegramBotTest.java
+--- a/src/test/java/TelegramBotTest.java	(revision efc301323802e883460f1dc7d7fba9a82701fc38)
++++ b/src/test/java/TelegramBotTest.java	(date 1792264643415)
+@@ -19,7 +19,7 @@
+     }
+ 
+     /**
+-     * testing logic's answer for rusiian text
++     * testing logic's answer for Russian text
+      */
+     @Test
+     void regularText_isEchoed() {
