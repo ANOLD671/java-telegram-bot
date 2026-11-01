@@ -4,8 +4,8 @@ import java.util.Map;
 /**
  * Repository class responsible for storing and managing user profiles.
  * <p>
- * This class uses an in-memory {@link HashMap} to store user data, mapping
- * each user's unique Telegram ID to their corresponding {@link UserProfile}.
+ * This class uses an in-memory HashMap to store user data, mapping
+ * each user's unique Telegram ID to their corresponding UserProfile.
  * It acts as the data access layer, completely independent of the Telegram API
  * and the business logic.
  */
@@ -20,7 +20,7 @@ public class UserRepository {
      * If a profile with the same Telegram ID already exists, it will be overwritten.
      * Null values are safely ignored.
      *
-     * @param user The {@link UserProfile} object to be saved.
+     * @param user The "UserProfile" object to be saved.
      */
     public void save(UserProfile user) {
         if (user != null) {
@@ -32,7 +32,7 @@ public class UserRepository {
      * Retrieves a user profile by their unique Telegram ID.
      *
      * @param id The unique Telegram ID of the user.
-     * @return The {@link UserProfile} associated with the given ID, or {@code null} if no profile exists.
+     * @return The UserProfile associated with the given ID, or null if no profile exists.
      */
     public UserProfile findById(long id) {
         return users.get(id);
@@ -42,7 +42,7 @@ public class UserRepository {
      * Checks whether a user profile exists in the storage.
      *
      * @param id The unique Telegram ID of the user.
-     * @return {@code true} if a profile with the given ID exists, {@code false} otherwise.
+     * @return true if a profile with the given ID exists, false otherwise.
      */
     public boolean exists(long id) {
         return users.containsKey(id);
