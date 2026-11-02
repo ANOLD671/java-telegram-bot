@@ -14,7 +14,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     public TelegramBot(String botToken, String botUsername) {
         super(botToken);
         this.botUsername = botUsername;
-        this.logic = new Logic(new UserRepository()); // Initialize your new Logic!
+        this.logic = new Logic(new UserRepository());
     }
 
     @Override
@@ -30,13 +30,18 @@ public class TelegramBot extends TelegramLongPollingBot {
             String text = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
 
-            // Call your Logic class instead of ProfileService
             String reply = logic.handle(userId, userName, text);
 
             sendText(chatId, reply);
         }
     }
 
+    /**
+     * This method sending text to user by chatID
+     *
+     * @param chatId
+     * @param text
+     */
     private void sendText(long chatId, String text) {
         SendMessage sm = SendMessage.builder()
                 .chatId(Long.toString(chatId))
@@ -44,7 +49,6 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             execute(sm);
         } catch (TelegramApiException e) {
-            // Using printStackTrace is okay for now, but we use System.err for standard practice
             System.err.println("Failed to send message: " + e.getMessage());
         }
     }
