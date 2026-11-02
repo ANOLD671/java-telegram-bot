@@ -14,7 +14,6 @@ public class Main {
      * The main method that serves as the starting point of the application.
      * Loads configuration from the .env file and registers the bot.
      *
-     * @param args Command-line arguments (not used).
      * @throws Exception If the bot fails to initialize or register with the Telegram API.
      */
     public void main(String[] args) throws Exception {

@@ -36,6 +36,12 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * This method sending text to user by chatID
+     *
+     * @param chatId
+     * @param text
+     */
     private void sendText(long chatId, String text) {
         SendMessage sm = SendMessage.builder()
                 .chatId(Long.toString(chatId))

@@ -22,7 +22,7 @@ public class TeamsRepository {
     }
 
     /**
-     * Reads the {@code teams.txt} file from resources and populates the teams list.
+     * Reads the teams.txt file from resources and populates the teams list.
      */
     private void loadTeamsFromFile() {
         try (InputStream is = getClass().getResourceAsStream("/teams.txt")) {
