@@ -13,12 +13,19 @@ public class LogicTest {
     private final long TEST_USER_ID = 123456789L;
     private final String TEST_USER_NAME = "Arnold";
 
+    /**
+     * initialize Logic and UserRepository
+     */
+
     @BeforeEach
     public void setUp() {
         userRepository = new UserRepository();
         logic = new Logic(userRepository);
     }
 
+    /**
+     * testing start command
+     */
     @Test
     public void testStartCommand() {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/start");
@@ -26,6 +33,9 @@ public class LogicTest {
         assertFalse(userRepository.exists(TEST_USER_ID));
     }
 
+    /**
+     * testing list /ListOfTeams command
+     */
     @Test
     public void testListOfTeamsCommand() {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/listOfTeams");
@@ -43,12 +53,18 @@ public class LogicTest {
         assertEquals("Зенит", userRepository.findById(TEST_USER_ID).getFavoriteTeam());
     }
 
+    /**
+     * testing /setteam command
+     */
     @Test
     public void testSetTeamCaseInsensitive() {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/setteam зенит");
         assertTrue(response.contains("Your favorite team is now: Зенит"));
     }
 
+    /**
+     * testing /setteam win invalid team name input
+     */
     @Test
     public void testSetTeamInvalidName() {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/setteam hfjsdh");
@@ -56,6 +72,9 @@ public class LogicTest {
         assertFalse(userRepository.exists(TEST_USER_ID));
     }
 
+    /**
+     * testing favorite team of new profile
+     */
     @Test
     public void testProfileWithoutTeam() {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/profile");
