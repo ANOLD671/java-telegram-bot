@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e358a8e9-10cd-4c07-ac74-1c623e1cbe9b" name="Changes" comment="try">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="795ae466-26d2-4161-98f8-20245c42598b" name="Changes" comment="- TelegramBot class adapted for new Logic class format" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,35 +18,15 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <excluded-from-favorite>
-      <branch-storage>
-        <map>
-          <entry type="REMOTE">
-            <value>
-              <list>
-                <branch-info repo="$PROJECT_DIR$" source="origin/main" />
-              </list>
-            </value>
-          </entry>
-        </map>
-      </branch-storage>
-    </excluded-from-favorite>
-    <favorite-branches>
-      <branch-storage>
-        <map>
-          <entry type="LOCAL">
-            <value>
-              <list>
-                <branch-info repo="$PROJECT_DIR$" source="test1" />
-              </list>
-            </value>
-          </entry>
-        </map>
-      </branch-storage>
-    </favorite-branches>
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="GRIGORIY &lt;ytuber006@gmail.com&gt;" />
+        <option value="GRIGORIY" />
+      </list>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="test1" />
+        <entry key="$PROJECT_DIR$" value="grisha-dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -56,83 +34,30 @@
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;ANOLD671&quot;
+    &quot;assignee&quot;: &quot;PrivetMAMA&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/ANOLD671/java-telegram-bot.git&quot;,
-    &quot;accountId&quot;: &quot;276a2ffc-72c9-4ed3-8cc5-ee503da394dd&quot;
+    &quot;accountId&quot;: &quot;e281ffa0-0da6-48ee-b4be-043805e5a11b&quot;
   }
 }</component>
-  <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\maven rep" />
+      </MavenGeneralSettings>
+    </option>
   </component>
-  <component name="NextEditCompletionFeaturesState">
-    <decayedCancelled>
-      <entry key="MS100" value="1.0000000000155964" />
-      <entry key="MS500" value="1.0069532395470677" />
-      <entry key="S2" value="1.598898668614388" />
-      <entry key="S5" value="3.5726000823363773" />
-      <entry key="S10" value="5.471845141725423" />
-      <entry key="S30" value="7.666470459856113" />
-      <entry key="S60" value="10.120861925632711" />
-      <entry key="M2" value="17.26318536338665" />
-      <entry key="M5" value="33.0438367898076" />
-      <entry key="M10" value="54.81710988714586" />
-      <entry key="M15" value="74.78369347746305" />
-      <entry key="M30" value="122.80998020324445" />
-      <entry key="H1" value="190.19394984650992" />
-      <entry key="H2" value="262.72256572802684" />
-      <entry key="H4" value="320.1733593304456" />
-      <entry key="D1" value="385.47397061705954" />
-      <entry key="W1" value="398.7247483158789" />
-    </decayedCancelled>
-    <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="1.1415843656816462E-214" />
-      <entry key="S5" value="3.0155895096652718E-86" />
-      <entry key="S10" value="2.245495321053334E-43" />
-      <entry key="S30" value="1.0333189751574819E-14" />
-      <entry key="S60" value="1.684325024781407E-7" />
-      <entry key="M2" value="7.608174742791114E-4" />
-      <entry key="M5" value="0.15897160850891834" />
-      <entry key="M10" value="1.3202081368426921" />
-      <entry key="M15" value="3.1855699133781004" />
-      <entry key="M30" value="9.329643005607275" />
-      <entry key="H1" value="18.0237651181287" />
-      <entry key="H2" value="26.404120019599173" />
-      <entry key="H4" value="32.60684745448279" />
-      <entry key="D1" value="39.40735114828974" />
-      <entry key="W1" value="40.76704009429917" />
-    </decayedSelected>
-    <decayedShown>
-      <entry key="MS100" value="4.754458209861333E-10" />
-      <entry key="MS500" value="0.013891530893715462" />
-      <entry key="S2" value="0.7655017095339126" />
-      <entry key="S5" value="3.031213835266284" />
-      <entry key="S10" value="5.142786360532816" />
-      <entry key="S30" value="7.540152333399021" />
-      <entry key="S60" value="10.053843415995852" />
-      <entry key="M2" value="17.224688332384616" />
-      <entry key="M5" value="33.17811340605073" />
-      <entry key="M10" value="56.11125848344733" />
-      <entry key="M15" value="77.93959084882528" />
-      <entry key="M30" value="132.10658079603414" />
-      <entry key="H1" value="208.18922405138815" />
-      <entry key="H2" value="289.10698816280615" />
-      <entry key="H4" value="352.76843110717215" />
-      <entry key="D1" value="424.8790207689031" />
-      <entry key="W1" value="439.4914502614522" />
-    </decayedShown>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 2
+  &quot;associatedIndex&quot;: 6,
+  &quot;fromUser&quot;: false
 }</component>
-  <component name="ProjectId" id="3Kd9EmimT1pvlvDn2Nytej6UZXR" />
+  <component name="ProjectId" id="3KH9NvGgJzVCu6B1HQuuFButKYm" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -140,84 +65,81 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
-    "Maven.java-telegram-bot [test].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
+    "Maven.java-telegram-bot [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "task-2",
-    "git.auto.fetch.suggestion.counter": "3",
-    "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
     "node.js.detected.package.jshint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.jshint": "",
-    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true"
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
   }
 }]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-34e2839f716b-intellij.indexing.shared.core-IU-262.9437.185" />
-        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.9437.185" />
+        <option value="bundled-jdk-30f59d01ecdd-a203e0a19954-intellij.indexing.shared.core-IU-262.10315.125" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.10315.125" />
       </set>
     </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e358a8e9-10cd-4c07-ac74-1c623e1cbe9b" name="Changes" comment="" />
-      <created>1791876474126</created>
+      <changelist id="795ae466-26d2-4161-98f8-20245c42598b" name="Changes" comment="" />
+      <created>1791203590054</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1791876474126</updated>
+      <updated>1791203590054</updated>
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="45ea0c8f-fdbd-46e8-8e59-c24c3bb36579" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
-        <entry key="MAIN">
+        <entry key="45ea0c8f-fdbd-46e8-8e59-c24c3bb36579">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="anold's-dev" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed" />
-    <MESSAGE value="try" />
-    <option name="LAST_COMMIT_MESSAGE" value="try" />
+    <MESSAGE value="- Added Java-docs&#10;&#10;- changed Java version in misc.xml from 26 to 25" />
+    <MESSAGE value="- Added answers for commands &quot;/start&quot; and &quot;/help&quot;&#10;&#10;- BotTOken and BotUsername removed from open-source code to .env file" />
+    <MESSAGE value="- &quot;BuildResponse()&quot; separated from &quot;onUpdateReceived()&quot; function.&#10;&#10;- Added tests for &quot;buildResponse()&quot; function." />
+    <MESSAGE value="main update" />
+    <MESSAGE value="main update comments" />
+    <MESSAGE value="- Added new class &quot;logic&quot;, wich contains all logical bot's logical operations. &#10;&#10;- Logic functions separated from Echo_class." />
+    <MESSAGE value="- Echo_class renamed to Telegram_bot&#10;- The operations to obtain the botUsername and botToken have been moved outside the class. They are now retrieved in `main` and passed to the `Telegram_bot` class constructor." />
+    <MESSAGE value="-Added javadocs in &quot;Main.java&quot; and &quot;Telegram_bot.java&quot;" />
+    <MESSAGE value="-&quot;.idea&quot; removed from git" />
+    <MESSAGE value="-Added javadocs" />
+    <MESSAGE value="-Added javadocs&#10;&#10;-Edited .gitignore" />
+    <MESSAGE value="-Deleted deprecated overrided methods from TelegramBot class" />
+    <MESSAGE value="-Changed testing code" />
+    <MESSAGE value="- Added concurrentHashMap library from java to store users data&#10;- Adaptation of the Logic class to work with task commands has begun.&#10;- Added new class UserProfile, which contains userId and user's favorite team" />
+    <MESSAGE value="- TelegramBot class adapted for new Logic class format" />
+    <option name="LAST_COMMIT_MESSAGE" value="- TelegramBot class adapted for new Logic class format" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="org.telegram.telegrambots.meta.exceptions.TelegramApiException" package="org.telegram.telegrambots.meta.exceptions" />
-          <option name="timeStamp" value="4" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

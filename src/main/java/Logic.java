@@ -25,7 +25,7 @@ public class Logic {
      * @param userId   The unique Telegram ID of the user sending the message.
      * @param userName The first name of the user.
      * @param command  The raw text message sent by the user.
-     * @return A {@link String} response to be sent back to the user.
+     * @return String response to be sent back to the user.
      */
     public String handle(long userId, String userName, String command) {
         if (command == null) {
