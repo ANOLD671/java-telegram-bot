@@ -24,13 +24,14 @@ public class LogicTest {
     }
 
     /**
-     * testing start command
+     * testing start command. correct display of the "welcome text" + username
      */
     @Test
     public void testStartCommand() {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/start");
-        assertTrue(response.contains("Welcome " + TEST_USER_NAME));
-        assertFalse(userRepository.exists(TEST_USER_ID));
+        String expected = "Welcome " + TEST_USER_NAME + " to the Football Bot!\n" +
+        "Use /listOfTeams to see available teams, then /setteam <name> to pick your club!";
+        assertEquals(expected, response);
     }
 
     /**
@@ -39,8 +40,23 @@ public class LogicTest {
     @Test
     public void testListOfTeamsCommand() {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/listOfTeams");
-        assertTrue(response.contains("Current Season Teams:"));
-        assertTrue(response.contains("Зенит") || response.contains("Zenit"));
+        String expected = "🏆 Current Season Teams:\n" + "Зенит\n" +
+                "Динамо Москва\n" +
+                "ЦСКА\n" +
+                "Краснодар\n" +
+                "Спартак Москва\n" +
+                "Оренбург\n" +
+                "Ростов\n" +
+                "Крылья Советов\n" +
+                "Балтика\n" +
+                "Динамо Махачкала\n" +
+                "Рубин\n" +
+                "Акрон\n" +
+                "Локомотив Москва\n" +
+                "Ахмат\n" +
+                "Родина\n" +
+                "Факел";
+        assertEquals(expected,response);
     }
 
     @Test
