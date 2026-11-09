@@ -59,23 +59,26 @@ public class LogicTest {
         assertEquals(expected,response);
     }
 
+    /**
+     * testing /setteam command. Testing creaing user profile. Testing the correctness of data saving
+     */
     @Test
     public void testSetTeamSuccessAndAutoCreation() {
         assertFalse(userRepository.exists(TEST_USER_ID));
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/setteam Зенит");
 
-        assertTrue(response.contains("Your favorite team is now: Зенит"));
+        assertEquals("⭐ Your favorite team is now: Зенит", response);
         assertTrue(userRepository.exists(TEST_USER_ID));
         assertEquals("Зенит", userRepository.findById(TEST_USER_ID).getFavoriteTeam());
     }
 
     /**
-     * testing /setteam command
+     * testing /setteam command when entering the correct name using a different case
      */
     @Test
     public void testSetTeamCaseInsensitive() {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/setteam зенит");
-        assertTrue(response.contains("Your favorite team is now: Зенит"));
+        assertEquals("⭐ Your favorite team is now: Зенит", response);
     }
 
     /**
@@ -84,7 +87,7 @@ public class LogicTest {
     @Test
     public void testSetTeamInvalidName() {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/setteam hfjsdh");
-        assertTrue(response.contains("is not in the league list"));
+        assertEquals("❌ *hfjsdh* is not in the league list! Check /listOfTeams.", response);
         assertFalse(userRepository.exists(TEST_USER_ID));
     }
 
@@ -94,6 +97,9 @@ public class LogicTest {
     @Test
     public void testProfileWithoutTeam() {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/profile");
-        assertTrue(response.contains("None selected yet"));
+
+        String expected = "👤 Profile Name: " + TEST_USER_NAME +
+                "\n❤️ Favorite Team: None selected yet. Use /setteam to pick one!";
+        assertEquals(expected, response);
     }
 }
