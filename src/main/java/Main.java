@@ -9,13 +9,6 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
  * The application entry point responsible for initializing the Telegram Bot.
  */
 public class Main {
-
-    /**
-     * The main method that serves as the starting point of the application.
-     * Loads configuration from the .env file and registers the bot.
-     *
-     * @throws Exception If the bot fails to initialize or register with the Telegram API.
-     */
     public void main(String[] args) throws Exception {
         System.out.println("Initializing configuration...");
 
