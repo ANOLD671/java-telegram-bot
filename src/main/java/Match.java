@@ -1,4 +1,6 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Represents a match information. Participants teams in match, match date, score
@@ -44,4 +46,16 @@ public class Match {
      * @return {@link Integer} Home Team Score
      */
     public Integer getHomeTeamScore() {return homeTeamScore;}
+
+    public String displayMatch() {
+        if (homeTeamScore != null && awayTeamScore != null) {
+            DateTimeFormatter pastFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            return "📅 " + date.format(pastFormatter) + "\n" +
+                    homeTeam + " " + homeTeamScore + " : " + awayTeamScore + " " + awayTeam;
+        } else {
+            DateTimeFormatter upcomingFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+            return "📅 " + date.format(upcomingFormatter) + "\n" +
+                    homeTeam + " - " + awayTeam;
+        }
+    }
 }
