@@ -13,7 +13,11 @@ public class MockFootballProvider implements FootballDataProvider {
         Match m1 = new Match("ЦСКА", "Спартак Москва", LocalDateTime.of(2025,4,25,19,0),2,2);
         Match m2 = new Match("Локомотив Москва", "Зенит", LocalDateTime.of(2026,3,12,20,30),0,0);
         Match m3 = new Match("Краснодар", "Факел", LocalDateTime.of(2026,10,1,17,45),3,0);
-        return Arrays.asList(m1,m2,m3);
+        Match m4 = new Match("ЦСКА", "Спартак Москва", LocalDateTime.of(2025,4,25,19,0),2,2);
+        Match m5 = new Match("Локомотив Москва", "Зенит", LocalDateTime.of(2026,3,12,20,30),0,0);
+        Match m6 = new Match("Краснодар", "Факел", LocalDateTime.of(2026,10,1,17,45),3,0);
+        Match m7 = new Match("Краснодар", "Факел", LocalDateTime.of(2026,10,1,17,45),3,0);
+        return Arrays.asList(m1,m2,m3,m4,m5,m6,m7);
     }
 
     @Override
@@ -21,7 +25,11 @@ public class MockFootballProvider implements FootballDataProvider {
         Match m1 = new Match("Динамо Москва", "Спартак Москва", LocalDateTime.of(2025,4,25,19,0),null,null);
         Match m2 = new Match("Локомотив Москва", "Зенит", LocalDateTime.of(2026,3,12,20,30),null,null);
         Match m3 = new Match("Краснодар", "Факел", LocalDateTime.of(2026,10,1,17,45),null,null);
-        return Arrays.asList(m1,m2,m3);
+        Match m4 = new Match("ЦСКА", "Спартак Москва", LocalDateTime.of(2025,4,25,19,0),null,null);
+        Match m5 = new Match("Локомотив Москва", "Зенит", LocalDateTime.of(2026,3,12,20,30),null,null);
+        Match m6 = new Match("Краснодар", "Факел", LocalDateTime.of(2026,10,1,17,45),null,null);
+        Match m7 = new Match("Краснодар", "Факел", LocalDateTime.of(2026,10,1,17,45),null,null);
+        return Arrays.asList(m1,m2,m3,m4,m5,m6,m7);
     }
 
     @Override
@@ -29,7 +37,11 @@ public class MockFootballProvider implements FootballDataProvider {
         Match m1 = new Match("Динамо Москва", "Спартак Москва", LocalDateTime.of(2025,4,25,19,0),0,0);
         Match m2 = new Match("Динамо Москва", "Зенит", LocalDateTime.of(2026,3,12,20,30),1,1);
         Match m3 = new Match("Динамо Москва", "Факел", LocalDateTime.of(2026,10,1,17,45),2,2);
-        return Arrays.asList(m1,m2,m3);
+        Match m4 = new Match("ЦСКА", "Спартак Москва", LocalDateTime.of(2025,4,25,19,0),2,2);
+        Match m5 = new Match("Локомотив Москва", "Зенит", LocalDateTime.of(2026,3,12,20,30),0,0);
+        Match m6 = new Match("Краснодар", "Факел", LocalDateTime.of(2026,10,1,17,45),3,0);
+        Match m7 = new Match("Краснодар", "Факел", LocalDateTime.of(2026,10,1,17,45),3,0);
+        return Arrays.asList(m1,m2,m3,m4);
     }
 
     @Override
@@ -37,6 +49,10 @@ public class MockFootballProvider implements FootballDataProvider {
         Match m1 = new Match("Динамо Москва", "Спартак Москва", LocalDateTime.of(2025,4,25,19,0),null,null);
         Match m2 = new Match("Динамо Москва", "Зенит", LocalDateTime.of(2026,3,12,20,30),null,null);
         Match m3 = new Match("Динамо Москва", "Факел", LocalDateTime.of(2026,10,1,17,45),null,null);
-        return Arrays.asList(m1,m2,m3);
+        Match m4 = new Match("ЦСКА", "Спартак Москва", LocalDateTime.of(2025,4,25,19,0),null,null);
+        Match m5 = new Match("Локомотив Москва", "Зенит", LocalDateTime.of(2026,3,12,20,30),null,null);
+        Match m6 = new Match("Краснодар", "Факел", LocalDateTime.of(2026,10,1,17,45),null,null);
+        Match m7 = new Match("Краснодар", "Факел", LocalDateTime.of(2026,10,1,17,45),null,null);
+        return Arrays.asList(m1,m2,m3,m4);
     }
 }

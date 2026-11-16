@@ -11,10 +11,10 @@ public class TelegramBot extends TelegramLongPollingBot {
     private final String botUsername;
     private final Logic logic;
 
-    public TelegramBot(String botToken, String botUsername) {
+    public TelegramBot(String botToken, String botUsername, Logic logic) {
         super(botToken);
         this.botUsername = botUsername;
-        this.logic = new Logic(new UserRepository());
+        this.logic = logic;
     }
 
     @Override
