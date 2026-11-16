@@ -33,7 +33,7 @@ public class Match {
      * Match date getter. Format
      * @return {@link String} YYYY-MM-DD'T'HH:MM
      */
-    public String getDate() {return date.toString();} // .toString() determined for LocalDateTime
+    public LocalDateTime getDate() {return date;}
     /**
      * Away Team Score getter
      * @return {@link Integer} Away Tean Score
