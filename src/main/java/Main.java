@@ -22,11 +22,14 @@ public class Main {
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
         String token = dotenv.get("BOT_TOKEN");
         String username = dotenv.get("BOT_USERNAME");
+        String apiKey = dotenv.get("THESTATS_API_KEY");
 
-        if (token == null || token.trim().isEmpty() || username == null || username.trim().isEmpty()) {
+        if (token == null || token.trim().isEmpty() || username == null || username.trim().isEmpty() || apiKey == null ) {
             System.out.println("BOT_TOKEN or BOT_USERNAME is missing. Exiting gracefully.");
             return;
         }
+
+
 
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         botsApi.registerBot(new TelegramBot(token, username));

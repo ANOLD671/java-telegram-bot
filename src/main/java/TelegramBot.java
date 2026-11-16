@@ -1,3 +1,4 @@
+import io.github.cdimascio.dotenv.Dotenv;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -14,7 +15,14 @@ public class TelegramBot extends TelegramLongPollingBot {
     public TelegramBot(String botToken, String botUsername) {
         super(botToken);
         this.botUsername = botUsername;
-        this.logic = new Logic(new UserRepository());
+        Dotenv dotenv = Dotenv.load();
+        String apiKey = dotenv.get("THESTATS_API_KEY");
+
+        // 2. Create the Provider
+        FootballDataProvider provider = new ApiFootballProvider(apiKey);
+
+
+        this.logic = new Logic(new UserRepository(),provider);
     }
 
     @Override

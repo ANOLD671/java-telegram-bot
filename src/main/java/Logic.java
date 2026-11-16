@@ -10,13 +10,17 @@ public class Logic {
     /** The repository responsible for providing the list of valid RPL teams. */
     private final TeamsRepository teamsRepo = new TeamsRepository();
 
+    private final FootballDataProvider provider;
+
     /**
      * Constructs the logic layer with the required user data repository.
      *
      * @param repository The storage mechanism for user profiles.
      */
-    public Logic(UserRepository repository) {
+    public Logic(UserRepository repository,FootballDataProvider provider)
+    {
         this.repository = repository;
+        this.provider = provider;
     }
 
     /**

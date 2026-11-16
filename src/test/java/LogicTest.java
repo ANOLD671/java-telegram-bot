@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -19,8 +18,8 @@ public class LogicTest {
 
     @BeforeEach
     public void setUp() {
-        userRepository = new UserRepository();
-        logic = new Logic(userRepository);
+        userRepository = new UserRepository()
+        logic = new Logic(userRepository,);
     }
 
     /**
