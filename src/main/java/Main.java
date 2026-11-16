@@ -27,9 +27,12 @@ public class Main {
             System.out.println("BOT_TOKEN or BOT_USERNAME is missing. Exiting gracefully.");
             return;
         }
+        UserRepository userRepository = new UserRepository();
+        /*FootballDataProvider matchProvider = new MockFootballProvider(); // <-- анольд, сюда нужно вставить ApiFootballProvider()
+        Logic logic = new Logic(userRepository, matchProvider);
 
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        botsApi.registerBot(new TelegramBot(token, username));
-        System.out.println("Football Bot is successfully up and running!");
+        botsApi.registerBot(new TelegramBot(token, username, logic));
+        System.out.println("Football Bot is successfully up and running!");*/
     }
 }
