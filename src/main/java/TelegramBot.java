@@ -12,17 +12,10 @@ public class TelegramBot extends TelegramLongPollingBot {
     private final String botUsername;
     private final Logic logic;
 
-    public TelegramBot(String botToken, String botUsername) {
+    public TelegramBot(String botToken, String botUsername, Logic logic) {
         super(botToken);
         this.botUsername = botUsername;
-        Dotenv dotenv = Dotenv.load();
-        String apiKey = dotenv.get("THESTATS_API_KEY");
-
-        // 2. Create the Provider
-        FootballDataProvider provider = new ApiFootballProvider(apiKey);
-
-
-        this.logic = new Logic(new UserRepository(),provider);
+        this.logic = logic;
     }
 
     @Override

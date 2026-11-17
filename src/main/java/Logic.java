@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * The core logic class for the Football Bot.
  * Handles all text commands received from the user and processes the business rules.
@@ -10,17 +12,33 @@ public class Logic {
     /** The repository responsible for providing the list of valid RPL teams. */
     private final TeamsRepository teamsRepo = new TeamsRepository();
 
-    private final FootballDataProvider provider;
+    /** The provider that handles match-related operations. */
+    private final FootballDataProvider matchProvider;
 
     /**
      * Constructs the logic layer with the required user data repository.
      *
      * @param repository The storage mechanism for user profiles.
      */
-    public Logic(UserRepository repository,FootballDataProvider provider)
-    {
+    public Logic(UserRepository repository, FootballDataProvider matchProvider) {
         this.repository = repository;
-        this.provider = provider;
+        this.matchProvider = matchProvider;
+    }
+
+    /**
+     * This method unites matches to a one string
+     * @param matches List of matches
+     * @return {@link String} a line formatted as a response for the user
+     */
+    private String formatMatches(List<Match> matches) {
+        if (matches == null || matches.isEmpty()) {
+            return "No matches found❌";
+        }
+        StringBuilder response = new StringBuilder();
+        for (Match match : matches) {
+            response.append(match.displayMatch()).append("\n\n");
+        }
+        return response.toString().trim();
     }
 
     /**
@@ -78,6 +96,51 @@ public class Logic {
 
         if (command.equals("/help")) {
             return "Available commands:\n/start\n/listOfTeams\n/setteam <team>\n/profile";
+        }
+
+        if ("/pastMatches".equals(command)) {
+            try {
+                List<Match> matches = matchProvider.getPastMatches(7);
+                return formatMatches(matches);
+            } catch (DataProviderException e) {
+                return "The service is temporarily unavailable; please try again later.";
+            }
+        }
+
+        if ("/upcomingMatches".equals(command)) {
+            try {
+                List<Match> matches = matchProvider.getUpcomingMatches(7);
+
+                return formatMatches(matches);
+            } catch (DataProviderException e) {
+                return "The service is temporarily unavailable; please try again later.";
+            }
+        }
+
+        if ("/pastMatchesForFT".equals(command)) {
+            try {
+                UserProfile user = repository.findById(userId);
+                if (user == null || user.getFavoriteTeam() == null) {return "You have not selected a favorite team.\n" +
+                        "Type /setFavoriteTeam <TeamName> o select favorite team";}
+                List<Match> matches = matchProvider.getPastMatchesForFT(4, user.getFavoriteTeam());
+
+                return formatMatches(matches);
+            } catch (DataProviderException e) {
+                return "The service is temporarily unavailable; please try again later.";
+            }
+        }
+
+        if ("/upcomingMatchesForFT".equals(command)) {
+            try {
+                UserProfile user = repository.findById(userId);
+                if (user == null || user.getFavoriteTeam() == null) {return "You have not selected a favorite team.\n" +
+                        "Type /setFavoriteTeam <TeamName> no select favorite team";}
+                List<Match> matches = matchProvider.getUpcomingMatchesForFT(4, user.getFavoriteTeam());
+
+                return formatMatches(matches);
+            } catch (DataProviderException e) {
+                return "The service is temporarily unavailable; please try again later.";
+            }
         }
 
         return "Unknown command. Type /help for options.";
