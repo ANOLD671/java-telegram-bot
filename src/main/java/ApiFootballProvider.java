@@ -17,8 +17,8 @@ import java.util.*;
 public class ApiFootballProvider implements FootballDataProvider{
     private final String apiKey;
     private HttpClient httpClient;
-    private static final String BASE_URL = "https://api.thestatsapi.com/api/football";
-    private static final String RPL_COMP_ID = "comp_5824";
+    private final String BASE_URL = "https://api.thestatsapi.com/api/football";
+    private final String RPL_COMP_ID = "comp_5824";
 
     /**
      * Creates the API provider.
