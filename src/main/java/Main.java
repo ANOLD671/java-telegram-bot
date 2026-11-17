@@ -29,13 +29,13 @@ public class Main {
             return;
         }
         UserRepository userRepository = new UserRepository();
-        /*FootballDataProvider matchProvider = new MockFootballProvider(); // <-- анольд, сюда нужно вставить ApiFootballProvider()
+        FootballDataProvider matchProvider = new ApiFootballProvider(apiKey); // <-- анольд, сюда нужно вставить ApiFootballProvider()
         Logic logic = new Logic(userRepository, matchProvider);
 
 
 
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         botsApi.registerBot(new TelegramBot(token, username, logic));
-        System.out.println("Football Bot is successfully up and running!");*/
+        System.out.println("Football Bot is successfully up and running!");
     }
 }

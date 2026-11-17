@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class ApiFootballProvider implements FootballDataProvider{
     private final String apiKey;
-    private HttpClient HttpClient;
+    private HttpClient httpClient;
     private static final String BASE_URL = "https://api.thestatsapi.com/api/football";
     private static final String RPL_COMP_ID = "comp_5824";
 
@@ -27,10 +27,10 @@ public class ApiFootballProvider implements FootballDataProvider{
      */
     public ApiFootballProvider(String apiKey) {
         this.apiKey = apiKey;
-        HttpClient = HttpClient;
+        this.httpClient = HttpClient.newHttpClient();
     }
     public HttpClient getHttpClient() {
-        return HttpClient;
+        return httpClient;
     }
 
     public String getApiKey() {
@@ -40,7 +40,7 @@ public class ApiFootballProvider implements FootballDataProvider{
     /**
     * Translate API English names to Russian names
     * */
-    private static final Map<String, String> EN_TO_RU = Map.ofEntries(
+    private final Map<String, String> EN_TO_RU = Map.ofEntries(
             Map.entry("Akhmat Grozny", "Ахмат"),
             Map.entry("Akhmat", "Ахмат"),
 
@@ -105,7 +105,7 @@ public class ApiFootballProvider implements FootballDataProvider{
             HttpRequest request = builder.build();
 
             HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
-            HttpResponse<String> response = HttpClient.send(request, handler);
+            HttpResponse<String> response = httpClient.send(request, handler);
 
             int statusCode = response.statusCode();
             if (statusCode != 200) {
@@ -170,7 +170,7 @@ public class ApiFootballProvider implements FootballDataProvider{
             awayScore = awayScoreElement.getAsInt();
         }
 
-        Match match = new Match(id, homeRu, awayRu, date, homeScore, awayScore);
+        Match match = new Match(homeRu, awayRu, date, homeScore, awayScore);
         return match;
     }
 

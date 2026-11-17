@@ -1,6 +1,5 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * Represents a match information. Participants teams in match, match date, score
@@ -28,7 +27,7 @@ public class Match {
      */
     private final Integer awayTeamScore;
 
-    public Match(String homeTeam, String awayTeam, String awayRu, LocalDateTime date, Integer homeTeamScore, Integer awayTeamScore) {
+    public Match(String homeTeam, String awayTeam, LocalDateTime date, Integer homeTeamScore, Integer awayTeamScore) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.date = date;
