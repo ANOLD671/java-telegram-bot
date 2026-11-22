@@ -7,7 +7,7 @@ import java.util.List;
 public interface FootballDataProvider {
 
     /**
-     * Get list of 7 last football league's matches
+     * Get list of entered quantity last football league's matches
      * @param limit number of matches to display
      * @return List of matches played
      * @throws DataProviderException if data source unavailable
@@ -15,7 +15,7 @@ public interface FootballDataProvider {
     List<Match> getPastMatches(Integer limit) throws DataProviderException;
 
     /**
-     * Get list of 7 upcoming football league's matches
+     * Get list of entered quantity upcoming football league's matches
      * @param limit number of matches to display
      * @return List of upcoming matches
      * @throws DataProviderException if data source unavailable
@@ -23,7 +23,7 @@ public interface FootballDataProvider {
     List<Match> getUpcomingMatches(Integer limit) throws DataProviderException;
 
     /**
-     * Get list of last 4 football league matches for input team
+     * Get list of last entered quantity football league matches for input team
      * @param limit number of matches to display
      * @param teamName input team
      * @return List of matches played for input team
@@ -32,7 +32,7 @@ public interface FootballDataProvider {
     List<Match> getPastMatchesForFT(Integer limit, String teamName) throws DataProviderException;
 
     /**
-     * Get list of 4 upcoming football league matches for current team
+     * Get list of entered quantity upcoming football league matches for current team
      * @param limit number of matches to display
      * @param teamName input team
      * @return List of upcoming matches for input team
