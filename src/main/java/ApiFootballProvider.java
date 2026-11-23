@@ -14,11 +14,17 @@ import java.util.*;
  * Fetches football match data from TheStatsAPI.
  * Translates English team names from the API into Russian names.
  */
-public class ApiFootballProvider implements FootballDataProvider{
+public class ApiFootballProvider implements FootballDataProvider {
     private final String apiKey;
-    private HttpClient httpClient;
+    private final HttpClient httpClient;
     private final String BASE_URL = "https://api.thestatsapi.com/api/football";
     private final String RPL_COMP_ID = "comp_5824";
+
+    // Queues to hold matches in memory so we only make 1 API request
+    private final Queue<Match> pastMatchesQueue = new LinkedList<>();
+    private final Queue<Match> upcomingMatchesQueue = new LinkedList<>();
+    private final Queue<Match> pastFTQueue = new LinkedList<>();
+    private final Queue<Match> upcomingFTQueue = new LinkedList<>();
 
     /**
      * Creates the API provider.
@@ -29,6 +35,7 @@ public class ApiFootballProvider implements FootballDataProvider{
         this.apiKey = apiKey;
         this.httpClient = HttpClient.newHttpClient();
     }
+
     public HttpClient getHttpClient() {
         return httpClient;
     }
@@ -38,8 +45,8 @@ public class ApiFootballProvider implements FootballDataProvider{
     }
 
     /**
-    * Translate API English names to Russian names
-    * */
+     * Translate API English names to Russian names
+     */
     private final Map<String, String> EN_TO_RU = Map.ofEntries(
             Map.entry("Akhmat Grozny", "Ахмат"),
             Map.entry("Akhmat", "Ахмат"),
@@ -86,13 +93,11 @@ public class ApiFootballProvider implements FootballDataProvider{
             Map.entry("Zenit St. Petersburg", "Зенит"),
             Map.entry("Zenit", "Зенит")
     );
+
     /**
-    * It sends the request. If the API says "Success" (200), it returns the raw JSON text.
-    * If anything goes wrong (no internet, wrong key, API down), it throws DataProviderException
-    * @param endpoint The URL part (e.g., "/matches").
-    * @return The raw JSON text from the API.
-    * @throws DataProviderException If the API fails or network is down.
-    * */
+     * It sends the request. If the API says "Success" (200), it returns the raw JSON text.
+     * If anything goes wrong (no internet, wrong key, API down), it throws DataProviderException
+     * */
     private String fetchJson(String endpoint) throws DataProviderException {
         try {
             String fullUrl = BASE_URL + endpoint;
@@ -101,7 +106,7 @@ public class ApiFootballProvider implements FootballDataProvider{
             HttpRequest.Builder builder = HttpRequest.newBuilder();
             builder.uri(uri);
             builder.header("Authorization", "Bearer " + apiKey);
-            builder.GET(); // Tell it this is a GET request
+            builder.GET();
             HttpRequest request = builder.build();
 
             HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
@@ -112,8 +117,7 @@ public class ApiFootballProvider implements FootballDataProvider{
                 String errorMessage = "API returned status: " + statusCode;
                 throw new DataProviderException(errorMessage);
             }
-            String responseBody = response.body();
-            return responseBody;
+            return response.body(); // Simplified to fix redundant local variable warning
         } catch (DataProviderException e) {
             throw e;
         } catch (Exception e) {
@@ -122,19 +126,17 @@ public class ApiFootballProvider implements FootballDataProvider{
         }
     }
 
-/**
-*takes one match from the API (a JSON object) and turns it into your Match Java object.
-*gets the English name, looks it up in our dictionary (EN_TO_RU), and gets the Russian name
-* */
+    /**
+     * takes one match from the API (a JSON object) and turns it into your Match Java object.
+     * gets the English name, looks it up in our dictionary (EN_TO_RU), and gets the Russian name
+     * */
     private Match toMatch(JsonObject node) {
         JsonElement idElement = node.get("id");
         String id = idElement.getAsString();
 
         JsonElement dateElement = node.get("utc_date");
         String dateStr = dateElement.getAsString();
-
         String cleanDateStr = dateStr.substring(0, 19);
-
         LocalDateTime date = LocalDateTime.parse(cleanDateStr);
 
         JsonObject homeTeamObj = node.getAsJsonObject("home_team");
@@ -158,107 +160,94 @@ public class ApiFootballProvider implements FootballDataProvider{
 
         Integer homeScore = null;
         JsonElement homeScoreElement = score.get("home");
-
         if (homeScoreElement != null && !homeScoreElement.isJsonNull()) {
             homeScore = homeScoreElement.getAsInt();
         }
 
         Integer awayScore = null;
         JsonElement awayScoreElement = score.get("away");
-
         if (awayScoreElement != null && !awayScoreElement.isJsonNull()) {
             awayScore = awayScoreElement.getAsInt();
         }
 
-        Match match = new Match(homeRu, awayRu, date, homeScore, awayScore);
-        return match;
+        return new Match(id, homeRu, awayRu, date, homeScore, awayScore); // Simplified to fix redundant local variable warning
     }
 
-/**
-* It opens the JSON text and finds the "data" array.
-*It goes through that array one item at a time.
-* It hands each item to the toMatch() method (which we simplified in the previous step), and puts the result into a normal Java List<Match>
-* */
-    private List<Match> parseMatches(String json) {
-
+    /**
+     * It opens the JSON text and finds the "data" array.
+     * It goes through that array one item at a time.
+     * */
+    private void loadMatchesToQueue(String json, Queue<Match> queue) {
         JsonElement rootElement = JsonParser.parseString(json);
         JsonObject rootObject = rootElement.getAsJsonObject();
 
         JsonElement dataElement = rootObject.get("data");
         JsonArray dataArray = dataElement.getAsJsonArray();
 
-        List<Match> matches = new ArrayList<>();
-
         for (int i = 0; i < dataArray.size(); i++) {
-
             JsonElement oneMatchElement = dataArray.get(i);
-
             JsonObject oneMatchObject = oneMatchElement.getAsJsonObject();
-
             Match match = toMatch(oneMatchObject);
-
-            matches.add(match);
+            queue.add(match);
         }
-        return matches;
     }
 
+    /**
+     * status=finished: Tells the API "give me matches that already happened."
+     * */
+    @Override
+    public Match getPastMatch() throws DataProviderException {
+        if (pastMatchesQueue.isEmpty()) {
+            String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=finished&per_page=10");
+            loadMatchesToQueue(json, pastMatchesQueue);
 
-/**
-* status=finished: Tells the API "give me matches that already happened."
-* */
-    @Override
-    public List<Match> getPastMatches(Integer limit) throws DataProviderException {
-        String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=finished&per_page=" + limit);
-        List<Match> matches = parseMatches(json);
-        Collections.reverse(matches); // Spec requires oldest first
-        return matches;
-    }
-/**
-* status=scheduled means "matches that haven't happened yet
-* */
-    @Override
-    public List<Match> getUpcomingMatches(Integer limit) throws DataProviderException {
-        String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=scheduled&per_page=" + limit);
-        return parseMatches(json);
-    }
-/**
-* per_page=50 ,we need to filter for one specific team .
-*  So we ask for a large batch (50), find the ones where a team played, and take the first 4.
-*It checks if the teamName,matches the home or away team in the match.
-*
-* */
-    @Override
-    public List<Match> getPastMatchesForFT(Integer limit, String teamName) throws DataProviderException {
-        String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=finished&per_page=50");
-        List<Match> allPast = parseMatches(json);
-        Collections.reverse(allPast);
-
-        List<Match> result = new ArrayList<>();
-        for (Match m : allPast) {
-            if (m.getHomeTeam().equals(teamName) || m.getAwayTeam().equals(teamName)) {
-                result.add(m);
-                if (result.size() == limit) break;
-            }
+            // Spec requires oldest first
+            List<Match> list = new ArrayList<>(pastMatchesQueue);
+            Collections.reverse(list);
+            pastMatchesQueue.clear();
+            pastMatchesQueue.addAll(list);
         }
-        return result;
+        return pastMatchesQueue.poll();
     }
-/**
-* it fetches scheduled matches instead of finished ones
-* */
+
+    /**
+     * status=scheduled means "matches that haven't happened yet
+     * */
     @Override
-    public List<Match> getUpcomingMatchesForFT(Integer limit, String teamName) throws DataProviderException {
-        String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=scheduled&per_page=50");
-        List<Match> allUpcoming = parseMatches(json);
-
-        List<Match> result = new ArrayList<>();
-        for (Match m : allUpcoming) {
-            if (m.getHomeTeam().equals(teamName) || m.getAwayTeam().equals(teamName)) {
-                result.add(m);
-                if (result.size() == limit) break;
-            }
+    public Match getUpcomingMatch() throws DataProviderException {
+        if (upcomingMatchesQueue.isEmpty()) {
+            String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=scheduled&per_page=10");
+            loadMatchesToQueue(json, upcomingMatchesQueue);
         }
-        return result;
+        return upcomingMatchesQueue.poll();
     }
 
+    /**
+     * per_page=50 ,we need to filter for one specific team.
+     * */
+    @Override
+    public Match getPastMatchForFT(String teamName) throws DataProviderException {
+        if (pastFTQueue.isEmpty()) {
+            String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=finished&per_page=50");
+            loadMatchesToQueue(json, pastFTQueue);
 
+            List<Match> list = new ArrayList<>(pastFTQueue);
+            Collections.reverse(list);
+            pastFTQueue.clear();
+            pastFTQueue.addAll(list);
+        }
+        return pastFTQueue.poll();
+    }
+
+    /**
+     * it fetches scheduled matches instead of finished ones
+     * */
+    @Override
+    public Match getUpcomingMatchForFT(String teamName) throws DataProviderException {
+        if (upcomingFTQueue.isEmpty()) {
+            String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=scheduled&per_page=50");
+            loadMatchesToQueue(json, upcomingFTQueue);
+        }
+        return upcomingFTQueue.poll();
+    }
 }

@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * The core logic class for the Football Bot.
@@ -95,12 +96,16 @@ public class Logic {
         }
 
         if (command.equals("/help")) {
-            return "Available commands:\n/start\n/listOfTeams\n/setteam <team>\n/profile";
+            return "Available commands:\n/start\n/listOfTeams\n/setteam <team>\n/profile\n/pastMatches\n/upcomingMatches\n/pastMatchesForFT\n/upcomingMatchesForFT";
         }
 
         if ("/pastMatches".equals(command)) {
             try {
-                List<Match> matches = matchProvider.getPastMatches(7);
+                List<Match> matches = new ArrayList<>();
+                for (int i = 0; i < 7; i++) {
+                    Match m = matchProvider.getPastMatch();
+                    if (m != null) matches.add(m);
+                }
                 return formatMatches(matches);
             } catch (DataProviderException e) {
                 return "The service is temporarily unavailable; please try again later.";
@@ -109,8 +114,11 @@ public class Logic {
 
         if ("/upcomingMatches".equals(command)) {
             try {
-                List<Match> matches = matchProvider.getUpcomingMatches(7);
-
+                List<Match> matches = new ArrayList<>();
+                for (int i = 0; i < 7; i++) {
+                    Match m = matchProvider.getUpcomingMatch();
+                    if (m != null) matches.add(m);
+                }
                 return formatMatches(matches);
             } catch (DataProviderException e) {
                 return "The service is temporarily unavailable; please try again later.";
@@ -120,10 +128,19 @@ public class Logic {
         if ("/pastMatchesForFT".equals(command)) {
             try {
                 UserProfile user = repository.findById(userId);
-                if (user == null || user.getFavoriteTeam() == null) {return "You have not selected a favorite team.\n" +
-                        "Type /setFavoriteTeam <TeamName> o select favorite team";}
-                List<Match> matches = matchProvider.getPastMatchesForFT(4, user.getFavoriteTeam());
+                if (user == null || user.getFavoriteTeam() == null) {
+                    return "You have not selected a favorite team.\nType /setFavoriteTeam <TeamName> to select favorite team";
+                }
 
+                List<Match> matches = new ArrayList<>();
+                // Keep calling until we get 4 matches for the favorite team
+                while (matches.size() < 4) {
+                    Match m = matchProvider.getPastMatchForFT(user.getFavoriteTeam());
+                    if (m == null) break;
+                    if (m.getHomeTeam().equals(user.getFavoriteTeam()) || m.getAwayTeam().equals(user.getFavoriteTeam())) {
+                        matches.add(m);
+                    }
+                }
                 return formatMatches(matches);
             } catch (DataProviderException e) {
                 return "The service is temporarily unavailable; please try again later.";
@@ -133,10 +150,19 @@ public class Logic {
         if ("/upcomingMatchesForFT".equals(command)) {
             try {
                 UserProfile user = repository.findById(userId);
-                if (user == null || user.getFavoriteTeam() == null) {return "You have not selected a favorite team.\n" +
-                        "Type /setFavoriteTeam <TeamName> no select favorite team";}
-                List<Match> matches = matchProvider.getUpcomingMatchesForFT(4, user.getFavoriteTeam());
+                if (user == null || user.getFavoriteTeam() == null) {
+                    return "You have not selected a favorite team.\nType /setFavoriteTeam <TeamName> to select favorite team";
+                }
 
+                List<Match> matches = new ArrayList<>();
+                // Keep calling until we get 4 matches for the favorite team
+                while (matches.size() < 4) {
+                    Match m = matchProvider.getUpcomingMatchForFT(user.getFavoriteTeam());
+                    if (m == null) break;
+                    if (m.getHomeTeam().equals(user.getFavoriteTeam()) || m.getAwayTeam().equals(user.getFavoriteTeam())) {
+                        matches.add(m);
+                    }
+                }
                 return formatMatches(matches);
             } catch (DataProviderException e) {
                 return "The service is temporarily unavailable; please try again later.";
