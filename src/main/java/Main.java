@@ -9,30 +9,26 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
  * The application entry point responsible for initializing the Telegram Bot.
  */
 public class Main {
-
-    /**
-     * The main method that serves as the starting point of the application.
-     * Loads configuration from the .env file and registers the bot.
-     *
-     * @throws Exception If the bot fails to initialize or register with the Telegram API.
-     */
     public void main(String[] args) throws Exception {
         System.out.println("Initializing configuration...");
 
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
         String token = dotenv.get("BOT_TOKEN");
         String username = dotenv.get("BOT_USERNAME");
+        String apiKey = dotenv.get("THESTATS_API_KEY");
 
-        if (token == null || token.trim().isEmpty() || username == null || username.trim().isEmpty()) {
+        if (token == null || token.trim().isEmpty() || username == null || username.trim().isEmpty() || apiKey == null ) {
             System.out.println("BOT_TOKEN or BOT_USERNAME is missing. Exiting gracefully.");
             return;
         }
         UserRepository userRepository = new UserRepository();
-        /*FootballDataProvider matchProvider = new MockFootballProvider(); // <-- анольд, сюда нужно вставить ApiFootballProvider()
+        FootballDataProvider matchProvider = new ApiFootballProvider(apiKey); // <-- анольд, сюда нужно вставить ApiFootballProvider()
         Logic logic = new Logic(userRepository, matchProvider);
+
+
 
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         botsApi.registerBot(new TelegramBot(token, username, logic));
-        System.out.println("Football Bot is successfully up and running!");*/
+        System.out.println("Football Bot is successfully up and running!");
     }
 }
