@@ -7,6 +7,10 @@ import java.time.format.DateTimeFormatter;
 
 public class Match {
     /**
+     * Match ID
+     */
+    private final String id;
+    /**
      * Home team's name
      */
     private final String homeTeam;
@@ -27,12 +31,13 @@ public class Match {
      */
     private final Integer awayTeamScore;
 
-    public Match(String homeTeam, String awayTeam, LocalDateTime date, Integer homeTeamScore, Integer awayTeamScore) {
+    public Match(String id, String homeTeam, String awayTeam, LocalDateTime date, Integer homeTeamScore, Integer awayTeamScore) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.date = date;
         this.homeTeamScore = homeTeamScore;
         this.awayTeamScore = awayTeamScore;
+        this.id = id;
     }
 
     /**
@@ -54,12 +59,17 @@ public class Match {
      * Away Team Score getter
      * @return {@link Integer} Away Tean Score
      */
-    public Integer getAwayTeamScore() {return awayTeamScore;}
+    public Integer getAwayScore() {return awayTeamScore;}
     /**
      * Home Team Score getter
      * @return {@link Integer} Home Team Score
      */
-    public Integer getHomeTeamScore() {return homeTeamScore;}
+    public Integer getHomeScore() {return homeTeamScore;}
+    /**
+     * Match ID getter
+     * @return {@link String} Match ID
+     */
+    public String getId() {return id;}
 
     /**
      *
@@ -67,12 +77,10 @@ public class Match {
      */
     public String displayMatch() {
         if (homeTeamScore != null && awayTeamScore != null) {
-            DateTimeFormatter pastFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            return "📅 " + date.format(pastFormatter) + "\n" +
+            return "📅 " + date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + "\n" +
                     homeTeam + " " + homeTeamScore + " : " + awayTeamScore + " " + awayTeam;
         } else {
-            DateTimeFormatter upcomingFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-            return "📅 " + date.format(upcomingFormatter) + "\n" +
+            return "📅 " + date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")) + "\n" +
                     homeTeam + " - " + awayTeam;
         }
     }

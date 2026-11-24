@@ -1,12 +1,12 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Unit tests for the Logic class.
+ * Unit tests for Logic and ApiFootballProvider.
  */
 public class LogicTest {
 
@@ -14,59 +14,198 @@ public class LogicTest {
     private UserRepository userRepository;
     private final long TEST_USER_ID = 123456789L;
     private final String TEST_USER_NAME = "Arnold";
-    private MockFootballProvider matchProvider;
+
+    private final String PAST_MATCHES_JSON = """
+            {
+              "data": [
+                {
+                  "id": "106",
+                  "utc_date": "2026-03-20T19:00:00Z",
+                  "home_team": { "name": "Dynamo Moscow" },
+                  "away_team": { "name": "Rubin Kazan" },
+                  "score": { "home": 4, "away": 0 }
+                },
+                {
+                  "id": "105",
+                  "utc_date": "2026-03-15T18:00:00Z",
+                  "home_team": { "name": "FC Rostov" },
+                  "away_team": { "name": "Dynamo Moscow" },
+                  "score": { "home": 1, "away": 2 }
+                },
+                {
+                  "id": "104",
+                  "utc_date": "2026-03-12T20:30:00Z",
+                  "home_team": { "name": "Dynamo Moscow" },
+                  "away_team": { "name": "Zenit St. Petersburg" },
+                  "score": { "home": 2, "away": 1 }
+                },
+                {
+                  "id": "103",
+                  "utc_date": "2026-03-10T19:00:00Z",
+                  "home_team": { "name": "CSKA Moscow" },
+                  "away_team": { "name": "FC Spartak Moscow" },
+                  "score": { "home": 1, "away": 1 }
+                },
+                {
+                  "id": "102",
+                  "utc_date": "2026-03-05T17:45:00Z",
+                  "home_team": { "name": "Fakel Voronezh" },
+                  "away_team": { "name": "Dynamo Moscow" },
+                  "score": { "home": 0, "away": 3 }
+                },
+                {
+                  "id": "101",
+                  "utc_date": "2026-03-01T16:00:00Z",
+                  "home_team": { "name": "Dynamo Moscow" },
+                  "away_team": { "name": "FC Spartak Moscow" },
+                  "score": { "home": 0, "away": 0 }
+                }
+              ]
+            }
+            """;
+
+    private final String UPCOMING_MATCHES_JSON = """
+            {
+              "data": [
+                {
+                  "id": "201",
+                  "utc_date": "2026-10-01T17:45:00Z",
+                  "home_team": { "name": "FK Krasnodar" },
+                  "away_team": { "name": "Fakel Voronezh" },
+                  "score": { "home": null, "away": null }
+                },
+                {
+                  "id": "202",
+                  "utc_date": "2026-10-05T20:30:00Z",
+                  "home_team": { "name": "Dynamo Moscow" },
+                  "away_team": { "name": "FC Spartak Moscow" },
+                  "score": { "home": null, "away": null }
+                },
+                {
+                  "id": "203",
+                  "utc_date": "2026-10-10T19:00:00Z",
+                  "home_team": { "name": "Zenit St. Petersburg" },
+                  "away_team": { "name": "Dynamo Moscow" },
+                  "score": { "home": null, "away": null }
+                },
+                {
+                  "id": "204",
+                  "utc_date": "2026-10-12T18:00:00Z",
+                  "home_team": { "name": "CSKA Moscow" },
+                  "away_team": { "name": "Lokomotiv Moscow" },
+                  "score": { "home": null, "away": null }
+                },
+                {
+                  "id": "205",
+                  "utc_date": "2026-10-15T17:45:00Z",
+                  "home_team": { "name": "Dynamo Moscow" },
+                  "away_team": { "name": "Fakel Voronezh" },
+                  "score": { "home": null, "away": null }
+                },
+                {
+                  "id": "206",
+                  "utc_date": "2026-10-20T19:00:00Z",
+                  "home_team": { "name": "Rubin Kazan" },
+                  "away_team": { "name": "Dynamo Moscow" },
+                  "score": { "home": null, "away": null }
+                },
+                {
+                  "id": "207",
+                  "utc_date": "2026-10-25T16:00:00Z",
+                  "home_team": { "name": "Dynamo Moscow" },
+                  "away_team": { "name": "FC Rostov" },
+                  "score": { "home": null, "away": null }
+                }
+              ]
+            }
+            """;
 
     /**
-     * initialize Logic and UserRepository
+     * Initializes UserRepository, stubbed ApiFootballProvider, and Logic before each test.
      */
-
     @BeforeEach
     public void setUp() {
         userRepository = new UserRepository();
-        matchProvider = new MockFootballProvider();
-        logic = new Logic(userRepository, matchProvider);
+        ApiFootballProvider stubProvider = new ApiFootballProvider("fake-key") {
+            @Override
+            protected String fetchJson(String endpoint) {
+                if (endpoint.contains("status=finished")) {
+                    return PAST_MATCHES_JSON;
+                }
+                return UPCOMING_MATCHES_JSON;
+            }
+        };
+        logic = new Logic(userRepository, stubProvider);
     }
 
     /**
-     * Testing /pastMatches
+     * Tests parsing, team name translation, chronological reversing, and queue caching for past matches.
      */
     @Test
-    public void testPastMatchesCommand() {
-        String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/pastMatches");
+    public void testGetPastMatch_ParsesTranslatesReversesAndCaches() {
+        AtomicInteger apiCallsCount = new AtomicInteger(0);
 
-        String expectedResponse =
-                "📅 25.04.2025\nЦСКА 2 : 2 Спартак Москва\n\n" +
-                        "📅 12.03.2026\nЛокомотив Москва 0 : 0 Зенит\n\n" +
-                        "📅 01.10.2026\nКраснодар 3 : 0 Факел\n\n" +
-                        "📅 25.04.2025\nЦСКА 2 : 2 Спартак Москва\n\n" +
-                        "📅 12.03.2026\nЛокомотив Москва 0 : 0 Зенит\n\n" +
-                        "📅 01.10.2026\nКраснодар 3 : 0 Факел\n\n" +
-                        "📅 01.10.2026\nКраснодар 3 : 0 Факел";
+        ApiFootballProvider provider = new ApiFootballProvider("fake-key") {
+            @Override
+            protected String fetchJson(String endpoint) {
+                apiCallsCount.incrementAndGet();
+                return PAST_MATCHES_JSON;
+            }
+        };
 
-        assertEquals(expectedResponse, response, "Incorrect output for /pastMatches");
+        Match first = provider.getPastMatch();
+        Assertions.assertNotNull(first);
+        Assertions.assertEquals("Динамо Москва", first.getHomeTeam());
+        Assertions.assertEquals("Спартак Москва", first.getAwayTeam());
+        Assertions.assertEquals(LocalDateTime.of(2026, 3, 1, 16, 0), first.getDate());
+        Assertions.assertEquals(0, first.getHomeScore());
+        Assertions.assertEquals(0, first.getAwayScore());
+
+        Match second = provider.getPastMatch();
+        Assertions.assertNotNull(second);
+        Assertions.assertEquals("Факел", second.getHomeTeam());
+        Assertions.assertEquals("Динамо Москва", second.getAwayTeam());
+
+        Match third = provider.getPastMatch();
+        Assertions.assertNotNull(third);
+        Assertions.assertEquals("ЦСКА", third.getHomeTeam());
+        Assertions.assertEquals("Спартак Москва", third.getAwayTeam());
+
+        Assertions.assertEquals(1, apiCallsCount.get(), "Only one API request should be made");
     }
 
     /**
-     * Testing /upcomingMatches
+     * Tests parsing of null scores, order preservation, and queue caching for upcoming matches.
      */
     @Test
-    public void testUpcomingMatchesCommand() {
-        String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/upcomingMatches");
+    public void testGetUpcomingMatch_ParsesNullScoresAndPreservesOrder() {
+        AtomicInteger apiCallsCount = new AtomicInteger(0);
 
-        String expectedResponse =
-                "📅 25.04.2025 19:00\nДинамо Москва - Спартак Москва\n\n" +
-                        "📅 12.03.2026 20:30\nЛокомотив Москва - Зенит\n\n" +
-                        "📅 01.10.2026 17:45\nКраснодар - Факел\n\n" +
-                        "📅 25.04.2025 19:00\nЦСКА - Спартак Москва\n\n" +
-                        "📅 12.03.2026 20:30\nЛокомотив Москва - Зенит\n\n" +
-                        "📅 01.10.2026 17:45\nКраснодар - Факел\n\n" +
-                        "📅 01.10.2026 17:45\nКраснодар - Факел";
+        ApiFootballProvider provider = new ApiFootballProvider("fake-key") {
+            @Override
+            protected String fetchJson(String endpoint) {
+                apiCallsCount.incrementAndGet();
+                return UPCOMING_MATCHES_JSON;
+            }
+        };
 
-        assertEquals(expectedResponse, response, "Incorrect output for /upcomingMatches");
+        Match first = provider.getUpcomingMatch();
+        Assertions.assertNotNull(first);
+        Assertions.assertEquals("Краснодар", first.getHomeTeam());
+        Assertions.assertEquals("Факел", first.getAwayTeam());
+        Assertions.assertNull(first.getHomeScore());
+        Assertions.assertNull(first.getAwayScore());
+
+        Match second = provider.getUpcomingMatch();
+        Assertions.assertNotNull(second);
+        Assertions.assertEquals("Динамо Москва", second.getHomeTeam());
+        Assertions.assertEquals("Спартак Москва", second.getAwayTeam());
+
+        Assertions.assertEquals(1, apiCallsCount.get(), "Queue should prevent repeated API requests");
     }
 
     /**
-     * Testing /pastMatchesForFT
+     * Tests filtering and formatting of the 4 past matches for the user's favorite team.
      */
     @Test
     public void testPastMatchesForFTCommand_WithFavoriteTeam() {
@@ -75,16 +214,16 @@ public class LogicTest {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/pastMatchesForFT");
 
         String expectedResponse =
-                "📅 25.04.2025\nДинамо Москва 0 : 0 Спартак Москва\n\n" +
-                        "📅 12.03.2026\nДинамо Москва 1 : 1 Зенит\n\n" +
-                        "📅 01.10.2026\nДинамо Москва 2 : 2 Факел\n\n" +
-                        "📅 25.04.2025\nЦСКА 2 : 2 Спартак Москва";
+                "📅 01.03.2026\nДинамо Москва 0 : 0 Спартак Москва\n\n" +
+                        "📅 05.03.2026\nФакел 0 : 3 Динамо Москва\n\n" +
+                        "📅 12.03.2026\nДинамо Москва 2 : 1 Зенит\n\n" +
+                        "📅 15.03.2026\nРостов 1 : 2 Динамо Москва";
 
-        assertEquals(expectedResponse, response, "Incorrect result for /pastMatchesForFT");
+        Assertions.assertEquals(expectedResponse, response, "Incorrect filtered output for /pastMatchesForFT");
     }
 
     /**
-     * Testing /upcomingMatchesForFT
+     * Tests filtering and formatting of the 4 upcoming matches for the user's favorite team.
      */
     @Test
     public void testUpcomingMatchesForFTCommand_WithFavoriteTeam() {
@@ -93,44 +232,44 @@ public class LogicTest {
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/upcomingMatchesForFT");
 
         String expectedResponse =
-                "📅 25.04.2025 19:00\nДинамо Москва - Спартак Москва\n\n" +
-                        "📅 12.03.2026 20:30\nДинамо Москва - Зенит\n\n" +
-                        "📅 01.10.2026 17:45\nДинамо Москва - Факел\n\n" +
-                        "📅 25.04.2025 19:00\nЦСКА - Спартак Москва";
+                "📅 05.10.2026 20:30\nДинамо Москва - Спартак Москва\n\n" +
+                        "📅 10.10.2026 19:00\nЗенит - Динамо Москва\n\n" +
+                        "📅 15.10.2026 17:45\nДинамо Москва - Факел\n\n" +
+                        "📅 20.10.2026 19:00\nРубин - Динамо Москва";
 
-        assertEquals(expectedResponse, response, "Incorrect output for /upcomingMatchesForFT");
+        Assertions.assertEquals(expectedResponse, response, "Incorrect filtered output for /upcomingMatchesForFT");
     }
 
     /**
-     * Testing /upcomingMatchesForFT with not selected favorite team
+     * Tests requesting favorite team matches when no favorite team is selected.
      */
     @Test
     public void testMatchesForFTCommand_WithoutFavoriteTeam() {
-        // The user has NOT selected a team; we are requesting matches immediately.
         String response = logic.handle(TEST_USER_ID, TEST_USER_NAME, "/upcomingMatchesForFT");
 
-        String expectedResponse = "You have not selected a favorite team.\nType /setFavoriteTeam <TeamName> no select favorite team";
+        String expectedResponse = "You have not selected a favorite team.\nType /setteam <TeamName> to select favorite team";
 
-        assertEquals(expectedResponse, response, "The bot must require a team to be selected.");
+        Assertions.assertEquals(expectedResponse, response, "The bot must require a team to be selected");
     }
 
     /**
-     * Testing simulated network error situation
+     * Tests that DataProviderException is thrown by provider and handled gracefully by Logic.
      */
     @Test
     public void testApiFailureExceptionHandling() {
-        // Network error imitation
-        FootballDataProvider brokenProvider = new FootballDataProvider() {
-            @Override public List<Match> getPastMatches(Integer limit) { throw new DataProviderException("Network Error"); }
-            @Override public List<Match> getUpcomingMatches(Integer limit) { throw new DataProviderException("Network Error"); }
-            @Override public List<Match> getPastMatchesForFT(Integer limit, String teamName) { throw new DataProviderException("Network Error"); }
-            @Override public List<Match> getUpcomingMatchesForFT(Integer limit, String teamName) { throw new DataProviderException("Network Error"); }
+        ApiFootballProvider brokenProvider = new ApiFootballProvider("fake-key") {
+            @Override
+            protected String fetchJson(String endpoint) {
+                throw new DataProviderException("Network Error");
+            }
         };
 
-        Logic brokenLogic = new Logic(userRepository, brokenProvider);
+        Assertions.assertThrows(DataProviderException.class, brokenProvider::getPastMatch);
+        Assertions.assertThrows(DataProviderException.class, brokenProvider::getUpcomingMatch);
 
+        Logic brokenLogic = new Logic(userRepository, brokenProvider);
         String response = brokenLogic.handle(TEST_USER_ID, TEST_USER_NAME, "/pastMatches");
 
-        assertEquals("The service is temporarily unavailable; please try again later.", response, "Provider error is not handled correctly");
+        Assertions.assertEquals("The service is temporarily unavailable; please try again later.", response);
     }
 }
