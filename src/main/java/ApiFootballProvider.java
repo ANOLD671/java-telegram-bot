@@ -192,9 +192,6 @@ public class ApiFootballProvider implements FootballDataProvider {
         }
     }
 
-    /**
-     * status=finished: Tells the API "give me matches that already happened."
-     * */
     @Override
     public Match getPastMatch() throws DataProviderException {
         if (pastMatchesQueue.isEmpty()) {
@@ -210,9 +207,6 @@ public class ApiFootballProvider implements FootballDataProvider {
         return pastMatchesQueue.poll();
     }
 
-    /**
-     * status=scheduled means "matches that haven't happened yet
-     * */
     @Override
     public Match getUpcomingMatch() throws DataProviderException {
         if (upcomingMatchesQueue.isEmpty()) {
@@ -222,31 +216,38 @@ public class ApiFootballProvider implements FootballDataProvider {
         return upcomingMatchesQueue.poll();
     }
 
-    /**
-     * per_page=50 ,we need to filter for one specific team.
-     * */
+
     @Override
     public Match getPastMatchForFT(String teamName) throws DataProviderException {
         if (pastFTQueue.isEmpty()) {
             String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=finished&per_page=50");
-            loadMatchesToQueue(json, pastFTQueue);
+            Queue<Match> tempQueue = new LinkedList<>();
+            loadMatchesToQueue(json, tempQueue);
 
-            List<Match> list = new ArrayList<>(pastFTQueue);
-            Collections.reverse(list);
-            pastFTQueue.clear();
-            pastFTQueue.addAll(list);
+            List<Match> filteredList = new ArrayList<>();
+            for (Match match : tempQueue) {
+                if (match.getHomeTeam().equals(teamName) || match.getAwayTeam().equals(teamName)) {
+                    filteredList.add(match);
+                }
+            }
+            Collections.reverse(filteredList);
+            pastFTQueue.addAll(filteredList);
         }
         return pastFTQueue.poll();
     }
 
-    /**
-     * it fetches scheduled matches instead of finished ones
-     * */
     @Override
     public Match getUpcomingMatchForFT(String teamName) throws DataProviderException {
         if (upcomingFTQueue.isEmpty()) {
             String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=scheduled&per_page=50");
-            loadMatchesToQueue(json, upcomingFTQueue);
+            Queue<Match> tempQueue = new LinkedList<>();
+            loadMatchesToQueue(json, tempQueue);
+
+            for (Match match : tempQueue) {
+                if (match.getHomeTeam().equals(teamName) || match.getAwayTeam().equals(teamName)) {
+                    upcomingFTQueue.add(match);
+                }
+            }
         }
         return upcomingFTQueue.poll();
     }
