@@ -62,13 +62,13 @@ public class ApiFootballProvider implements FootballDataProvider {
 
             Map.entry("Dinamo Makhachkala", "Динамо Махачкала"),
 
-            Map.entry("Dynamo Moscow", "Динамо"),
+            Map.entry("Dynamo Moscow", "Динамо Москва"),
             Map.entry("Dynamo", "Динамо"),
 
             Map.entry("FC Rostov", "Ростов"),
             Map.entry("Rostov", "Ростов"),
 
-            Map.entry("FC Spartak Moscow", "Спартак"),
+            Map.entry("FC Spartak Moscow", "Спартак Москва"),
             Map.entry("Spartak", "Спартак"),
 
             Map.entry("FK Krasnodar", "Краснодар"),
@@ -80,7 +80,7 @@ public class ApiFootballProvider implements FootballDataProvider {
             Map.entry("Krylya Sovetov Samara", "Крылья Советов"),
             Map.entry("Krylya Sovetov", "Крылья Советов"),
 
-            Map.entry("Lokomotiv Moscow", "Локомотив"),
+            Map.entry("Lokomotiv Moscow", "Локомотив Москва"),
             Map.entry("Lokomotiv", "Локомотив"),
 
             Map.entry("Orenburg", "Оренбург"),
@@ -221,17 +221,12 @@ public class ApiFootballProvider implements FootballDataProvider {
     public Match getPastMatchForFT(String teamName) throws DataProviderException {
         if (pastFTQueue.isEmpty()) {
             String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=finished&per_page=50");
-            Queue<Match> tempQueue = new LinkedList<>();
-            loadMatchesToQueue(json, tempQueue);
+            loadMatchesToQueue(json, pastFTQueue);
 
-            List<Match> filteredList = new ArrayList<>();
-            for (Match match : tempQueue) {
-                if (match.getHomeTeam().equals(teamName) || match.getAwayTeam().equals(teamName)) {
-                    filteredList.add(match);
-                }
-            }
-            Collections.reverse(filteredList);
-            pastFTQueue.addAll(filteredList);
+            List<Match> list = new ArrayList<>(pastFTQueue);
+            Collections.reverse(list);
+            pastFTQueue.clear();
+            pastFTQueue.addAll(list);
         }
         return pastFTQueue.poll();
     }
@@ -240,14 +235,7 @@ public class ApiFootballProvider implements FootballDataProvider {
     public Match getUpcomingMatchForFT(String teamName) throws DataProviderException {
         if (upcomingFTQueue.isEmpty()) {
             String json = fetchJson("/matches?competition_id=" + RPL_COMP_ID + "&status=scheduled&per_page=50");
-            Queue<Match> tempQueue = new LinkedList<>();
-            loadMatchesToQueue(json, tempQueue);
-
-            for (Match match : tempQueue) {
-                if (match.getHomeTeam().equals(teamName) || match.getAwayTeam().equals(teamName)) {
-                    upcomingFTQueue.add(match);
-                }
-            }
+            loadMatchesToQueue(json, upcomingFTQueue);
         }
         return upcomingFTQueue.poll();
     }
