@@ -98,7 +98,7 @@ public class ApiFootballProvider implements FootballDataProvider {
      * It sends the request. If the API says "Success" (200), it returns the raw JSON text.
      * If anything goes wrong (no internet, wrong key, API down), it throws DataProviderException
      * */
-    private String fetchJson(String endpoint) throws DataProviderException {
+    protected String fetchJson(String endpoint) throws DataProviderException {
         try {
             String fullUrl = BASE_URL + endpoint;
             URI uri = URI.create(fullUrl);

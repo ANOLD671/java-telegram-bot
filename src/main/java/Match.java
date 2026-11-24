@@ -31,7 +31,7 @@ public class Match {
      */
     private final Integer awayTeamScore;
 
-    public Match(String homeTeam,String id, String awayTeam, LocalDateTime date, Integer homeTeamScore, Integer awayTeamScore) {
+    public Match(String id, String homeTeam, String awayTeam, LocalDateTime date, Integer homeTeamScore, Integer awayTeamScore) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.date = date;
@@ -59,12 +59,12 @@ public class Match {
      * Away Team Score getter
      * @return {@link Integer} Away Tean Score
      */
-    public Integer getAwayTeamScore() {return awayTeamScore;}
+    public Integer getAwayScore() {return awayTeamScore;}
     /**
      * Home Team Score getter
      * @return {@link Integer} Home Team Score
      */
-    public Integer getHomeTeamScore() {return homeTeamScore;}
+    public Integer getHomeScore() {return homeTeamScore;}
     /**
      * Match ID getter
      * @return {@link String} Match ID
