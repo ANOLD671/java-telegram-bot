@@ -56,7 +56,12 @@ public class Logic {
         }
 
         if (command.equals("/start")) {
-            return "Welcome " + userName + " to the Football Bot!\nUse /listOfTeams to see available teams, then /setteam <name> to pick your club!";
+            return "Welcome " + userName + " to the Football Bot!\nUse /listOfTeams to see available teams, then /setteam <name> to pick your club!"
+                    + "\nUse /pastMatches to get 7 last RPL matches"
+                    + "\nUse /upcomingMatches to get 7 upcoming RPL matches\n"
+                    + "\nWhen favorite team already selected:"
+                    + "\nUse /pastMatchesForFT to get 4 last matches for your FT!"
+                    + "\nUse /upcomingMatchesForFT to get 4 upcoming matches for yout FT!";
         }
 
         if (command.equals("/listOfTeams")) {
@@ -151,7 +156,7 @@ public class Logic {
             try {
                 UserProfile user = repository.findById(userId);
                 if (user == null || user.getFavoriteTeam() == null) {
-                    return "You have not selected a favorite team.\nType /setFavoriteTeam <TeamName> to select favorite team";
+                    return "You have not selected a favorite team.\nType /setteam <TeamName> to select favorite team";
                 }
 
                 List<Match> matches = new ArrayList<>();
